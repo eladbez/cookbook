@@ -1,0 +1,15 @@
+<table summery="dish lists">
+		
+<% dishes.each do |dish| %>
+	<div class="dish"
+		<%= link_to(dish.name, {:action =>'show',:id => dish.id}, :class => 'action')%><br />
+		<%= link_to(image_tag(dish.image_url.to_s, :size => '50x50'), {:action =>'show',:id => dish.id})%><br />
+		<%if user_id=session[:user_id]%>				
+			<td><%=link_to("delete recipe",{:action =>'delete',:id=>dish.id}, :class => 'action')%></td><br />
+		<%end%>
+	</div>		
+	
+	<br />
+	<hr />
+<%end%>
+</table>

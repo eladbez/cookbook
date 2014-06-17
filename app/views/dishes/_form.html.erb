@@ -1,0 +1,30 @@
+
+<% if session[:user_id] %>
+	<%= f.hidden_field :user_id,:value => session[:user_id] %>
+<%end%>
+
+<h3>upload image file</h3>
+	<%= f.file_field :image %>
+
+<table>
+	<tr>
+		<th><%=f.label(:name)%></th>
+		<th><%=f.label(:taste)%></th>
+		<th><%=f.label(:culture)%></th>
+		<th><%=f.label(:mealpart)%></th>
+		<th><%=f.label('shared?',:shared) if session[:user_id]%></th>
+	</tr>
+	<tr>
+		<td><%=f.text_field(:name)%></td>
+		<td><%=f.select(:taste,["sweet","sweet-sour","sour","piquant","spicy","spicy-sweet","salty","???another???"])%></td>
+		<td><%=f.text_field(:culture)%></td>
+		<td><%=f.select(:mealpart,["appertif","first course","intermidiate","mail course","dessert","tea","coffee","break","???another???"])%></td>
+		<td><%=f.check_box(:shared) if session[:user_id]%></td>
+	</tr>
+</table>
+<%if false%>	
+	<%=render(:partial => 'grocery_fields', :locals => {:f => f})%>
+	<%=render(:partial => 'grocery_fields', :locals => {:f => f})%>
+	<%=render(:partial => 'grocery_fields', :locals => {:f => f})%>
+	<%=render(:partial => 'grocery_fields', :locals => {:f => f})%>
+<%end%>			

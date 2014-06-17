@@ -1,0 +1,59 @@
+<h2><%=@user.name%>'s profile</h2><br />
+
+<%= image_tag @user.image_url.to_s, :size => '250x250' %>
+
+<% if notmyfriend%>
+	<%=button_to "offer friendship",{:controller => 'FriendInvt', :action => 'create'}, :id => @user.id %>		
+<% end %>	 
+
+<% if myself%>
+	<%= button_to "edit my profile", {:controller => 'user', :action => 'edit'}, :id  => session[:user_id] %>
+<% end %>
+
+<%if not_invited%>
+	<%= button_to "invite to the feast", {:controller => 'FeastInvt', :action => 'create'}, :id => @user.id  %>
+<% end %>
+
+<%if not_assigned %>
+  <%= button_to #assign dish to user %>
+<% end %>
+<br />
+
+<table>
+	<tr>
+		<th>name:</th>
+		<td><%= @user.name %></td>
+		<th>e-mail:</th>
+		<td><%= @user.email %></td>
+	</tr>
+	<tr>
+		<th>city:</th>
+		<td><%= @user.city %></td>
+		<th>street and house number</th>
+		<td><%= @user.street_num %></td>
+	</tr>
+	<tr>
+		<% unless user.entrance.blank? %>
+			<th>entrance:</th>
+			<td><%= @user.entrance %></td>
+		<% end %>
+		<%= unless user.apartment_num.blank?%> 			
+			<th>apartment number</th>
+			<td><%= @user.apartment_num %></td>
+		<% end %>
+	</tr>
+	<tr>
+		<th>is the kitchen kosher?</th>
+		<td><%= @user.kosher? %></td>
+	</tr>
+	</table><br />
+	
+	<h2>his friends are:</h2> 
+	<%= @friends = @user.friends %>
+	<%= render(:partial => 'user_list', locals => {:@users => @friends ) %>
+	
+
+ 
+
+ 
+

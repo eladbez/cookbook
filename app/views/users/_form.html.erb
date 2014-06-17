@@ -1,0 +1,40 @@
+
+<h3>upload your picture</h3> <br />
+	<%= f.file_field :image %>
+<table>
+	<tr>
+		<th><%=f.label(:name)%></th>
+		<td><%=f.text_field(:name)%></td>
+		<th><%=f.label(:email)%></th>
+		<td><%=f.text_field(:email)%></td>
+	</tr>
+	<tr>
+		<th><%=f.label(:password)%></th>
+		<td><%=f.password_field(:password)%></td>
+		<th><%=f.label(:password_confirmation, "confirm password")%></th>
+		<td><%=f.password_field(:password_confirmation)%></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:city) %></th>
+		<td><%= f.text_field(:city) %></td>
+		<th><%= f.label(:neighborhood) %></th>
+		<td><%= f.text_field(:neighborhood) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:street_num) %></th>
+		<td><%= f.text_field(:street_num) %></td>
+		<th><%= f.label(:entrance) %></th>
+		<td><%= f.text_field(:entrance) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label(:level) %></th>
+		<td><%= f.text_field(:level) %></td>
+		<th><%= f.label(:apartment_num, "apartment number") %></th>
+		<td><%= f.text_field(:apartment_num)%></td>
+	</tr>
+	<tr>
+		<th><%=f.label(:kosher?, "kosher?")%></th>
+		<td><%=f.select(:kosher?,["yes","no","i think yes","mehadrin","badatz"])%></td>
+	</tr>
+	
+</table>

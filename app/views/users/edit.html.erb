@@ -1,0 +1,12 @@
+<%= error_messeges_for(@user)%><br />
+
+<%= link_to("back to main page", {:controller => %>
+
+<h2>edit your profile</h2><br />
+
+<% form_for(:user, :url => {:action => 'update'}, :multipart => true) do |f| %>
+
+	<%= render(:partial => 'form', :locals => {:f =>f})%>
+
+<%=f.submit("save profile")%>
+<%end%>

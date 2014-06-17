@@ -1,0 +1,27 @@
+<h2><u>food search - search for dishes</u></h2>
+
+<%= form_tag(:action=>'list') do %>
+<table>
+	<tr>
+		<th><%=label_tag(:taste)%></th>
+		<td><%=select_tag("taste",options_for_select(["sweet","sweet-sour","sour","piquant","spicy","spicy-sweet","salty","???another???"]))%></td>
+	</tr>
+	<tr>
+		<th><%= label_tag(:culture) %></th>
+		<td><%= text_field_tag(:culture) %></td>
+	</tr>
+	<tr>
+		<th><%= label_tag(:grocery) %></th>
+		<td><%= text_field_tag(:grocery) %></td>
+	</tr>
+	<tr>
+		<th><%=label_tag(:mealpart)%></th>
+		<td><%=select_tag("mealpart",options_for_select(["appertif","first course","intermidiate","mail course","dessert","tea","coffee","break","???another???"]))%></td>
+	</tr>
+	<tr>
+		<th><%= label_tag(:recipe) %></th>
+		<td><%= text_field_tag(:recipe) %></td>
+	</tr>
+</table>
+  	<%= submit_tag("create recipe") %>
+<% end %>

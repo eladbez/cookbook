@@ -1,0 +1,61 @@
+<h1>let the feast begin!!</h1>
+<p>a great feast is onward!</p>
+
+<table>
+	<tr>
+		<th>feast time <%=@feast.feast_time%></th>
+		<th>feast place <%=@feast.feast_place%></th>
+	</tr>
+	<!-- !!!!!!!!!! from here needs editing !!!!!!!!!!!!! -->
+</table>
+
+<h2>participants</h2>
+<div class="add_participants">
+	 <%= image_tag('add_participants.png', :size => '60x30', :alt => 'Photo Gallery') %>
+</div>
+
+<table>
+	<tr>
+		<th>name</th>
+		<th>kosher?</th>
+		<th>participants status</th>
+		<th>&nbsp</th>
+	</tr>
+	<%@users.each do |user|%>
+	<tr>
+		<td><%= user.name%></td>
+		<td><%= image_tag user.image_url.to_s, :size => '50x50' %></td>
+		<td><%= user.kosher?%></td>
+		<td><%= user.participation.where("feast_id=@feast.id").coming???%></td> 
+	</tr>
+	<%end%>
+</table>
+
+<h2>dishes</h2>
+
+<%if false%>
+ this one is for the dish table needs alot of changes and also the dish search.
+<div class="add_">
+	 <%= image_tag('add_participants.png', :size => '60x30', :alt => 'Photo Gallery') %>
+</div>
+
+<table>
+	<tr>
+		<th>name</th>
+		<th>kosher?</th>
+		<th>participants status</th>
+		<th>&nbsp</th>
+	</tr>
+	<%@users.each do |user|%>
+	<tr>
+		<td><%= user.name%></td>
+		<td><%= image_tag user.image_url.to_s, :size => '50x50' %></td>
+		<td><%= user.kosher?%></td>
+		<td><%= user.participation.where("feast_id=@feast.id").coming???%></td> 
+	</tr>
+	
+</table>
+onto here
+<%end%>
+
+<%end%>

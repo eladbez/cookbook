@@ -1,0 +1,2 @@
+module FriendInvtHelper
+end

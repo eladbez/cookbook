@@ -1,0 +1,57 @@
+<h1> my feast list </h1>
+
+<div class="feast">
+<%= link_to({:action => 'new'}) do%>
+	 <%= image_tag('feast_new.jpg', :size => '260x260', :alt => 'new dish') %>
+<%end%>
+</div>
+
+<%@user_feast_m.each do |f|%>
+<div class="feast">
+	<%=link_to(:action => 'show') do%>
+		<%=feast_image(f)%>
+	<%end%>
+
+	<p><u> feast time: </u><%=f.feast_time%></p><br />
+	<p><u>feast place: </u><%=f.feast_place%></p><br /><br />
+
+</div>	
+	    
+		
+		<%= link_to('delete feast', {:action => 'delete',:id => f.id}) %>
+		
+		<br /><br /><br />
+
+<h2><u>users</u></h2>		
+		<% users=f.users%>
+			
+		<%= render(:partial => 'shared/user_list', :locals => {:users => users}) %>
+<h2><u>dishes</u></h2>		
+		<%= render(:partial => 'shared/dish_list', :locals => {:dishes => f.dishes})%>			
+			
+			
+<%end%>
+<br /><br /><br /><br />
+
+<%if false%>
+
+<h2>participated feast list</h2>
+<%@user_feast_p.each do |f|%>
+	
+	<%=link_to(:action => 'show')%>
+		<%= image_tag f.image_url.to_s, :size => '100x100' %><br />
+		<p> feast time: <%=f.feast_time%></p><br />
+		<p> feast place: <%=f.feast_place%></p><br /><br />
+		link_to("delete feast", {:action => 'delete'}, :id=>f.id) <br />
+		
+		<% users=f.users%>
+		
+		<%= render(:partial => 'shared/user_list', :locals => {:users => users}) %>
+		
+		<%= render(:partial => 'shared/dish_list', :locals => {:dishes => f.dishes})%>			
+		
+			
+	<%end%>
+<br /><br /><br /><br />
+
+<%end%>	

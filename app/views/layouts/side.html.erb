@@ -1,0 +1,32 @@
+<%User.find(session[:user_id])%>
+<%= image_tag @@me.image_url.to_s, :size => '50x50' %>
+<h2>welcome <%=@@me.name%></h2><br /><br /><br />
+
+<%=link_to {:controller => 'messeges', :action => 'list'}%>
+	<p><u>my messeges</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to {:controller => 'feasts', :action => 'list'}%>
+	<p><u>my feasts</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to {:controller => 'dishes', :action => 'list'}, :id =>@@me.id%>
+	<p><u>my recipes</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to {:controller => 'friendship', :action => 'list'}%>
+	<p><u>my messeges</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to {:controller => 'dishes', :action => 'sort_form'}%>
+	<p><u>public recipes</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to {:controller => 'access', :action => 'logout'}%>
+	<p><u>log out</u></p>
+<%end%>

@@ -1,0 +1,47 @@
+
+<%link_to("<< back to search",{:action=>'sort_form'})%>
+
+<h2>The secret recipe for: <%=@dish.name%></h2> 
+
+<%= image_tag @dish.image_url.to_s, :size => '250x250' %>  
+  
+<%if @feast%>
+	<p><%=User.find(params[:bringing_user_id]).name%> brings <%@dish.name%> to the feast</p>
+<%end%>
+
+<%if @dish.user_id.blank? || @dish.user_id==session[:user_id] %>
+	<%=link_to("edit recipe",{:action =>'edit',:id=>@dish.id})%>
+<%end%>
+			
+<%if @dish.user_id==session[:user_id]%>				
+	<%=link_to("delete recipe",{:action =>'delete', :id=>@dish.id})%>
+<%end%>
+
+<%if false%>
+<table>
+	<tr>
+		<th>quantity</th>
+		<th>measure</th>
+		<th>grocery</th>
+	</tr>
+	
+
+	<%dish.grocery.each do |g|%>
+	<tr>
+		<td><%=g.quantity%></td>
+		<td><%=g.measure%></td>
+		<td><%=g.name%></td>
+	</tr>
+	<%end%>
+
+</table>
+<%end%>
+
+<h2>cooking instructions</h2>
+<p><%=@dish.recipe%></p>
+
+<h2>is it healthy?</h2>
+<p><%=@dish.health_value%></p>
+
+  
+  

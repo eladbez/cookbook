@@ -1,0 +1,69 @@
+<!--  ===================================================== -->
+<%if false%>
+	<h2>participants</h2>
+	
+	<div class="add_participants">
+		 <%= image_tag('add_participants.png', :size => '60x30', :alt => 'Photo Gallery') %>
+	</div>
+	
+	<% @users.each do |user| %>
+	<div class="display block">
+		<%= link_to({:controller=>'users', :action =>'show'}, :id=>user.id) do%>
+			<%= user.name %><br />
+			<%= image_tag user.image_url.to_s, :size => '150x150' %><br />
+		<%end%>
+		<table>
+			<tr>
+				<th> kosher?</th>
+				<td><%=user.kosher?%></td>
+			</tr>
+			<tr>
+				<th>status</th>
+				<td><%=user.coming%></td>
+			</tr>
+	
+		</table>
+</div>	
+
+	<%f.fields_for :participations do |fp|%>
+		<% fp.hidden_field :user_id %>
+		<% fp.hidden_field :_destroy %>
+		<%=link_to_function("remove","remove_fields(this)")%>
+		
+		
+		
+		
+		
+		
+		<%= #render(:partial => "participations_fields", :locals => {:f => fp})%>
+		<!-- the dishes are nested inside participations which ends later -->
+		
+			<h2>dishes</h2>
+
+			<div class="add_">
+				 <%= image_tag('add_dishes.png', :size => '60x30', :alt => 'Photo Gallery') %>
+			</div>
+
+			<%fp.fields_for :obligations do |fpo|%> 
+				<%= render(:partial => "obligations_fields", :locals => {:f => fpo})%>
+			
+			
+			<!-- remove nedded -->
+			<!-- add fields java is needed -->
+			<!-- ask to bring is needed -->
+			<%end%> <!--fpo end -->
+	<%end%> <!-- fp end-->
+<%end%> <!-- if flase end -->
+
+
+
+
+	$.post("#",{user_id: user_id},function(){
+		 alert(<%=params[:user_id]%>);
+		   $("#add_field").append( <% fp.hidden_field :user_id, :value => params[:user_id] %>); 
+			})
+			
+			
+			 alert(<%=params[:user_id]%>);
+
+<!--  ===================================================== -->

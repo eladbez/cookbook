@@ -1,0 +1,23 @@
+<h3>log in now!</h3> <br /> <br />
+
+<%= form_tag(:action => 'attempt_login') do%>
+
+	<%= label_tag(:username, "user name")%><br />
+	<%= text_field_tag(:username)%><br />
+	<%= label_tag(:password)%><br />
+	<%= password_field_tag(:password)%><br />
+
+	<%= submit_tag("log in") %>
+
+<% end %>
+
+<br /><br /><br />
+
+<h3>new user? </h3>
+
+
+<%= link_to("register as a new user", {:controller => 'users', :action => 'new'}) %> 
+
+
+	
+

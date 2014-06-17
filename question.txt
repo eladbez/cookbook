@@ -1,0 +1,560 @@
+i made a simple association - a rich joined table - 
+feast to user through participation 
+and user to feast through participation.
+but only on side works althogh it is totaly symeric:
+
+user.rb:
+
+    class User < ActiveRecord::Base
+  
+      require 'digest/sha1'
+      mount_uploader :image, ImageUploader
+  
+      has_many :participations
+      has_many :feasts, :through => :participations
+
+
+participation.rb:
+
+    class Participation < ActiveRecord::Base
+  
+      belongs_to :user
+      belongs_to :feast
+  
+      has_many :obligations
+      has_many :dishes, :through=> :obligations
+      has_many :groceries, :as => :needed 
+      
+    end
+
+
+
+
+
+feast.rb:
+    
+    class Feast < ActiveRecord::Base
+
+      mount_uploader :image, ImageUploader
+  
+      has_many :participations
+      has_many :users, :through => :participations
+  
+      has_many :courses
+      has_many :dishes, :through=>:course
+  
+      has_many :groceries, :as => :needed  
+  
+      has_many :feast_invt, :as => :invitable
+  
+      validates_presence_of :feast_time
+      validates_presence_of :feast_place
+  
+  
+    end
+
+loading the relevant database:
+
+    irb(main):001:0> feast = Feast.find(1)
+
+      ←[1m←[36mFeast Load (1.0ms)←[0m  ←[1mSELECT `feasts`.* FROM `feasts` WHERE `fe
+    asts`.`id` = ? LIMIT 1←[0m  [["id", 1]]
+
+    => #<Feast id: 1, cost: nil, feast_place: "home", feast_time: "2014-03-14 00:00:
+    00", created_at: "2014-05-19 17:50:30", updated_at: "2014-05-19 17:50:30", image
+    : nil>
+
+    irb(main):002:0> user=User.find(3)
+
+      ←[1m←[35mUser Load (1.0ms)←[0m  SELECT `users`.* FROM `users` WHERE `users`.`i
+    d` = ? LIMIT 1  [["id", 3]]
+
+    => #<User id: 3, name: "elad bezalel", password: "", email: "
+    ", hashed_password: "", creat
+    ed_at: "2014-05-14 18:30:46", updated_at: "2014-05-14 18:30:46", shop_cost: nil,
+     salt: "", city: "", street_num
+    : "", entrance: "b", level: "3", apartment_num: "7", neighborhood: "
+    ", kosher?: nil, image: "el4.jpg">
+    irb(main):003:0> par = Participation.find(1)
+    
+  ←[1m←[36mParticipation Load (1.0ms)←[0m  ←[1mSELECT `participations`.* FROM `p
+    articipations` WHERE `participations`.`id` = ? LIMIT 1←[0m  [["id", 1]]
+
+    => #<Participation id: 1, user_id: 3, feast_id: 1, created_at: "2014-05-19 17:54
+    :30", updated_at: "2014-05-19 17:54:30", user_costs: nil, meneger?: nil, accepte
+    d?: nil, coming???: nil>
+   irb(main):004:0>
+
+the thing is that when i write:
+ 
+    users.feasts 
+
+it works normally
+
+but the opposite just doesn't work: (althogh it is totaly symetric!)
+
+ 
+    irb(main):002:0> feast.users
+
+
+    NoMethodError: undefined method `users' for #<ActiveRecord::Relation::ActiveReco
+    rd_Relation_Feast:0x548cfa0>
+    
+
+      from C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/activerecord-4
+     .0.2/lib/active_record/relation/delegation.rb:121:in `method_missing'
+        from C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/activerecord-4
+     .0.2/lib/active_record/relation/delegation.rb:68:in `method_missing'
+        from (irb):2
+        from C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/railties-4.0.2
+     /lib/rails/commands/console.rb:90:in `start'
+        from C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/railties-4.0.2
+     /lib/rails/commands/console.rb:9:in `start'
+        from C:/RailsInstaller/Ruby1.9.3/lib/ruby/gems/1.9.1/gems/railties-4.0.2
+      /lib/rails/commands.rb:62:in `<top (required)>'
+        from bin/rails:4:in `require'
+        from bin/rails:4:in `<main>'
+
+my relevant schema.rb:
+
+    create_table "feasts", force: true do |t|
+        t.integer  "cost"
+        t.string   "feast_place"
+        t.datetime "feast_time"
+        t.datetime "created_at"
+        t.datetime "updated_at"
+        t.string   "image"
+     end
+ 
+    create_table "participations", force: true do |t|
+        t.integer  "user_id"
+        t.integer  "feast_id"
+        t.datetime "created_at"
+        t.datetime "updated_at"
+        t.integer  "user_costs"
+        t.boolean  "meneger?"
+        t.boolean  "accepted?"
+        t.string   "coming???"
+      end
+
+      add_index "participations", ["user_id", "feast_id"], name:          
+                 index_participations_on_user_id_and_feast_id", using: :btree
+
+      create_table "users", force: true do |t|
+         t.string   "name",            limit: 75
+         t.string   "password",        limit: 40
+         t.string   "email",                      default: "", null: false
+         t.string   "hashed_password"
+         t.datetime "created_at"
+         t.datetime "updated_at"
+         t.integer  "shop_cost"
+         t.string   "salt"
+         t.string   "city"
+         t.string   "street_num"
+         t.string   "entrance"
+         t.string   "level"
+         t.string   "apartment_num"
+         t.string   "neighborhood"
+         t.string   "kosher?"
+         t.string   "image"
+      end
+
+    end
+
+i even tried to add another index
+     
+      "participations", ["feast_id", "user_id"]
+
+
+so it will also be symetric but it did not work
+
+what to do??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hello to all readers
+i am using rails 4 and ruby1.9.3:
+when running the rails app on webrick the javascript did not work .
+so i did some troubleshooting to focus on the problem.
+
+1)when i run inspect element i saw the correct file is included (feast.js)
+  so i guess the problem is not with asset pipeline.
+
+i try to run a simple function called "addy" that is supposed to make an alert messege
+but inspit that i can see that the js file is included (i included it on head part of the document and also on the buttom of the body part) when i press the link nothing as if the js files has no effect:
+
+feast.js file:
+
+    // this is something i commented out
+    //$function()(
+    //$(".add_participants").on("click", function(evt) {
+              var searchWindow = window.open("http://users/search","","","");
+              //in the search method create a javascript with the 
+			  //search window object as  
+			  //"searchWindow.opener.location.reload" so to reload
+			  //the opener page.
+			  // location.reload(true) will get it again from cached 
+			  // but i think its not needed
+			  
+      //          });
+
+    $function remove_fields(link){
+    	$(link).prev().attr({value: 1});
+	$(link).parent.hide;
+
+    }
+
+    function addy(){
+    	alert('hello');
+    }  
+
+
+and the layout rendered(only the part of the js include tag): 
+
+
+    <head>
+    
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           	<title>the amazing COOK BOOK <%= "| #{@username}" if @username %></title>
+     	     <meta name="author" content="elad bezalel">
+         	 <%= javascript_include_tag('application')%>
+         	 <%= stylesheet_link_tag('login') %>
+        </  head>
+
+
+application.js file:
+    
+     // This is a manifest file that'll be compiled into application.js, which will include        
+    all the files
+    // listed below.
+    //
+    // Any JavaScript/Coffee file within this directory, lib/assets/javascripts,     
+    vendor/assets/javascripts,
+    // or vendor/assets/javascripts of plugins, if any, can be referenced here using a     
+    relative path.
+     //
+    // It's not advisable to add code directly here, but if you do, it'll appear at the    
+    bottom of the
+     // the compiled file.
+
+    //
+    // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK    
+    LINE SHOULD
+    // GO AFTER THE REQUIRES BELOW.
+    //
+    //= require jquery
+    //= require jquery_ujs
+    //= require_tree .
+    //
+
+inspect elements( in the relevant view generated as viewed in the browser):
+
+    <head>
+    
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    	    <title>the amazing COOK BOOK </title>
+          <meta name="author" content="elad bezalel">
+    <script src="/assets/jquery.js?body=1"></script>
+    <script src="/assets/jquery_ujs.js?body=1"></script>
+    <script src="/assets/feast.js?body=1"></script>
+    <script src="/assets/feast_invt.js?body=1"></script>
+    <script src="/assets/friend_invt.js?body=1"></script>
+    <script src="/assets/messeges.js?body=1"></script>
+    <script src="/assets/participation.js?body=1"></script>
+    <script src="/assets/posts.js?body=1"></script>
+    <script src="/assets/public.js?body=1"></script>
+    <script src="/assets/replies.js?body=1"></script>
+    <script src="/assets/application.js?body=1"></script>
+      	 <link href="/assets/login.css?body=1" media="screen" rel="stylesheet">
+    </head>
+
+
+and the view:
+  
+      <h1>let the feast begin!!</h1>
+      <p>please enter all feast deatails</p><br />
+      <%= form_for(:feast, :url=>{:action=>'create'}) do |f|%>
+
+	
+  		<%=f.label("feast time", :feast_time)%><br /><br />
+		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %>
+                <br /><br />
+	
+	
+		<%=f.label("feast place", :feast_place)%><br /><br />
+		<%= f.text_field(:feast_place) %> <br /><br />
+
+     <%=submit_tag("start the feast")%>
+    <%end%> <!-- form end -->
+
+
+
+      <%= link_to("addy",'#', :onclick => "addy(); return true;") %>
+     <p>
+	
+     </p> 
+
+
+i also tried 
+
+    link_to_function("addy","addy();")
+
+yet the javascript is not working...
+
+<u>what is the problem????????????</u>
+
+
+
+
+
+
+
+hello
+i have written a script that opens a pop up window , searches for a user , when finds 
+the user the search window closes and then the script shows the nes user on the parent window.
+
+basicely i tried all of the script  seperately but i have problems when i pass between windows. the code ahead does not pass the found user , but passes one example user just for meantime to debug the code.
+
+here is the script file: ( i will explain it later )
+
+    var orgWindow 			 
+    var searchWindow
+ 
+    $(document).ready(function(){
+    $(".add_participants").on("click", function() {
+			  var orgWindow = window.self			 
+			  var searchWindow =                  
+    window.open("http://localhost:3000/users/search", "_blank","left=200, top=100,     
+    height=300, width=300, menubar=yes");
+			  
+            });
+		});		
+				
+    function printUser(){
+	var a  = orgWindow.document.createElement("a");
+	a.setAttribute("href","/users/show");
+	a.setAttribute("id","3");
+	var aText = orgWindow.document.createTextNode("elad bezalel");
+	var img = orgWindow.document.createElement("img");
+	img.setAttribute("alt","El4");
+	img.setAttribute("src","/uploads/user/image/3/el4.jpg");
+	img.setAttribute("height","150");
+	img.setAttribute("width","150");
+	myDiv = orgWindow.document.getElementById("par");
+	a.appendChild(img);
+	var brk = orgWindow.document.createElement("br");
+	a.appendChild(brk);
+	a.appendChild(aText);
+	myDiv.appendChild(a);
+   }
+		
+    function add_user(){
+	user_id = $("#button").data("user_id");
+	window.close(searchWindow);
+	window.blur(searchWindow);
+	window.focus(orgWindow);
+	orgWindow.document.write(printUser());
+	orgWindow.close();
+    }		
+
+i am using jquery. when i click a button the search window open. then i find a user in the search window and click on another button (add user) and then the search window closes and the parent window gets focused. now i tried to implement the user image and name . but somehow it doesn't work.
+
+how should i repair my script?
+
+
+
+
+
+hello everyone.
+
+my program is opening a pop up window(with javascript) , and then in the window there is a search mechanism that finds a specific user.
+the window refers to the original window and there it attaches the user image and his name.
+
+the original page is a form for a feast. the purpose of attaching the user is 
+to show that when the form is submitted the user will be part of the feast.
+
+i accomplish submitting the user with the feast by making a nested attribute form for the user , and what i am trying to do is to attach a hidden field to that form with the user 
+id. 
+
+the problem is the user id is saved in a javascript variable. and the rails nested attributes helper does not make any visiable HTML code. thus i must take the javascript 
+variable and pass it to the rails helper - which is impossible.
+
+what is the best way to accomplish my task - better to do it with js - so i can learn? 
+
+
+my code:
+
+the new feast template:
+
+       <head>
+           <% include_gon %>
+           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+         
+        	 <%= javascript_include_tag('application')%>
+   	         <%= stylesheet_link_tag('login') %>
+        </head>
+
+    <p>please enter all feast deatails</p><br />
+    <%= form_for(:feast, :url=>{:action=>'create'}) do |f|%>
+
+	
+		<%= f.label("feast time", :feast_time)%><br /><br />
+		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %>
+        <br /><br />
+	
+	
+		<%=f.label("feast place", :feast_place)%><br /><br />
+		<%= f.text_field(:feast_place) %> <br /><br />
+
+      <h2>participants
+	
+	    <u>
+	 <%= link_to '#', :onclick => "add_par(); return false;",class: "right" do %>
+
+          <!-- this link function launches the search window -->
+
+         <%= image_tag('add_participants.png', :size => '100x100',
+         :alt => 'add participants') %>
+		 <%end%>
+       </u>
+    </h2>	
+
+    <br /><br /><br />	 
+
+       	<div id ="par">
+		<% f.fields_for :participations do |fp| %>
+			<% fp.hidden_field :user_id, :value => "3" %>
+			<% fp.hidden_field :_destroy %>
+			<div id="add_field"> <!-- this div is for fetchind with js and 
+                        adding hidden fields -->
+				
+			</div>
+		<%end%>	<!-- nested form end -->
+	</div>		
+	
+	
+		
+      <%=submit_tag("start the feast")%>
+
+       <%end%> <!-- form end -->
+
+
+search results in the search window:
+
+    <head>
+         <% include_gon %>
+         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   	 <%= javascript_include_tag('application')%>
+   	 <%= stylesheet_link_tag('users') %>
+    </head>
+       <%@users.each do |u|%>
+
+      <aside>
+          <!--  $("#button").click($(window.opener).add_user($(this).data("user_id"))); -->
+  	  <%= button_to "add user",'#', :onclick => "(window.opener).add_user(this); return    
+        false;", :data => {userid: u.id,username: u.name,imgsrc: u.image}, id: "button"  %>
+      </aside>	
+	<div class="user">
+		<%= link_to({:controller => 'users',:action =>'show'}) do %>
+			<%= image_tag(u.image_url.to_s, :size => '50x50')%><br />
+			<%= u.name %>
+		<%end%>
+		<br /><br />
+		<small><u>city:</u>&nbsp;<%= u.city %></small><br />
+		<small><u>kitchen:</u>&nbsp;<%= u.kosher %></small>
+	</div>		
+      <%end%>
+
+       <br /><br /><br />
+       <hr />
+
+
+
+
+the javascript file :
+ 
+    var orgWindow;
+    var searchWindow;
+    var imgSrc;
+    var userId;
+    var userName;
+
+    function add_par(){
+			  orgWindow = window;			 
+			  searchWindow = window.open("http://localhost:3000/users/search",           
+                         "search","left=200, top=100, height=300, width=300, menubar=yes");
+			  searchWindow.focus();
+		}	
+				
+        function printUser(userIdF,userNameF,imgSrcF){
+	        var a  = document.createElement("a");
+                a.setAttribute("href","/users/show");
+         	a.setAttribute("id",userIdF);
+        	var aText = document.createTextNode(userNameF);
+	        var img = document.createElement("img");
+        	img.setAttribute("alt","user picture");
+	        img.setAttribute("src",imgSrcF);
+	        img.setAttribute("height","100");
+	        img.setAttribute("width","100");
+	        outerDiv = document.getElementById("par");
+	        myDiv = document.createElement("div");
+	        myDiv.className = "user_block";
+	        a.appendChild(img);
+	        var brk = document.createElement("br");
+	        a.appendChild(brk);
+	        a.appendChild(aText);
+	        myDiv.appendChild(a);
+	        outerDiv.appendChild(myDiv);
+	
+            //$("#add_field").append (<% fp.hidden_field :user_id, :value => "??javascript  
+            variable user_id???" %>);
+
+          }
+		
+         function add_user(butt){   //  this one is called from the search window to add   
+                                    //  user in original window
+              alert('hello'); 
+              userId = $(butt).data('userid');
+	          userName = $(butt).data('username');
+	          imgSrc = $(butt).data('imgsrc').image.url;
+	          searchWindow.close();
+	          orgWindow.focus();
+	          printUser(userId,userName,imgSrc);
+           }		
+		
+
+what sould i do?
+ 
+i prefer to do it from the window just for learning js - i know it is a bad practice.
+
+
+    
+	
+	
+
+
+    
+
+
+
+
+
+
+
+
+
+     

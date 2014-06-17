@@ -1,0 +1,8 @@
+
+
+<p>find a user whose name is:</p>
+
+<%= form_tag(:action => 'list') do %>
+	<%=text_field_tag(:search_name)%>
+	<%=submit_tag("find")%>
+<%end%>

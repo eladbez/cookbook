@@ -1,0 +1,20 @@
+
+<%users.each do |u|%>
+
+<aside>
+
+	<%= button_to "add user",'#', :onclick => "add_user(); return false;", :data => {user_id: u.id}, id: "button"  %>
+</aside>	
+	<div class="user">
+		<%= link_to({:controller => 'users',:action =>'show'}) do %>
+			<%= image_tag(u.image_url.to_s, :size => '50x50')%><br />
+			<%= u.name %>
+		<%end%>
+		<br /><br />
+		<small><u>city:</u>&nbsp;<%= u.city %></small><br />
+		<small><u>kitchen:</u>&nbsp;<%= u.kosher %></small>
+	</div>		
+<%end%>
+
+<br /><br /><br />
+<hr />

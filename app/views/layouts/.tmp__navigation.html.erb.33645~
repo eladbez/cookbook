@@ -1,0 +1,9 @@
+       	<nav id="top-menu">
+   			<ul class="menu">
+   				 <%= link_to(raw("<li> login </li>"),{:controller => 'access', :action => 'login'})%>
+				 <%= link_to(raw("<li>show all recipes</li>"),{:action=>'list'})%>
+       			 <%= link_to(raw("<li>add recipe</li>"),{:action=>'new'})%>
+       			 <a href=""><li>food of the week </li></a>
+        	     <a href=""><li>good restaurants </li></a>
+    		</ul>
+		</nav>

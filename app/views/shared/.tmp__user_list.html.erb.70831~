@@ -1,0 +1,12 @@
+
+<%users.each do |u|%>
+	<div class="user">
+	<%=link_to({:controller => 'users',:action =>'show'}) do%>
+		<%=u.name%><br />	
+		<%=user_image(u)%>
+	<%end%>
+	</div>		
+<%end%>
+
+<br /><br /><br /><br /><br /><br /><br />
+<hr />

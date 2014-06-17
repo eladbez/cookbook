@@ -1,0 +1,31 @@
+    <%= link_to("<<back to search" , root_path) %>
+	<%= link_to("Add New Page", {:action => 'new'}) %>
+	
+	<h1><u>The dish you ordered, sir? </u></h1>
+		<br />
+		
+		<table summery="dish lists">
+		<tr>	
+			<th>name</th>
+			<th>looks good</th>
+			<th>taste</th>	
+			<th>culture</th>
+			<th>mealpart</th>
+			<th>&nsbp;</th>
+		</tr>
+<% @results.each do |dish| %>
+	<tr>
+		<td><%= link_to(dish.name, {:action =>'show',:id => dish.id}, :class => 'action')%></td>
+		<td><%= link_to(image_tag(dish.image_url.to_s, :size => '50x50'), {:action =>'show',:id => dish.id}, :class => 'action')%></td>
+		<td><%= dish.taste %></td>
+		<td><%= dish.culture %></td>
+		<td><%= dish.mealpart %></td>
+		<%if user_id=session[:user_id]%>				
+			<td><%=link_to("delete recipe",{:action =>'delete',:id=>dish.id}, :class => 'action')%></td>
+		<%end%>
+			
+	</tr>
+	<br />
+	<hd />
+<%end%>
+</table>

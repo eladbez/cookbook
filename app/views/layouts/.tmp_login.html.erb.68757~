@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    	<title>the amazing COOK BOOK <%= "| #{@username}" if @username %></title>
+   	 <meta name="author" content="elad bezalel"> <!-- the username needs suplying --> 
+  	<!--<%= stylesheet_link_tag('public1') %> --><!-- this css page needs creation -->
+   	 <%= stylesheet_link_tag('application') %>
+  </head>
+  <body>
+
+
+
+
+<aside>
+
+<%User.find(session[:user_id])%>
+	<%= image_tag User.find(session[:user_id]).image_url.to_s, :size => '50x50' %>
+<h2>welcome <%=User.find(session[:user_id]).name%></h2><br /><br /><br />
+
+<%=link_to :controller => 'messeges', :action => 'list' do%>
+	<p><u>my messeges</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to :controller => 'feasts', :action => 'list' do%>
+	<p><u>my feasts</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to :controller => 'dishes', :action => 'list', :id =>session[:user_id] do%>
+	<p><u>my recipes</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to :controller => 'friendship', :action => 'list' do%>
+	<p><u>my messeges</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to :controller => 'dishes', :action => 'sort_form' do%>
+	<p><u>public recipes</u></p>
+<%end%>
+<br /><br />
+
+<%=link_to :controller => 'access', :action => 'logout' do%>
+	<p><u>log out</u></p>
+<%end%>
+
+</aside>
+
+
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+</div>  
+      <br><br><br><br> 
+ 	  <% if !flash[:notice].blank? %>
+        <div class="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    <br /><br /><br />
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+<div id="content">
+      
+        <%= yield %>
+      
+</div>   
+
+
+   <footer>
+      	<p id="copyright">&copy; elad bezalel all rights reserved</p>
+    </footer>
+  </body>
+  
+	<%= javascript_include_tag('application') %>
+</html>
+      
+      	

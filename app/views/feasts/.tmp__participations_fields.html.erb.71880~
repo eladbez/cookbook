@@ -1,0 +1,18 @@
+<div class="display block">
+		<%= link_to({:controller=>'users', :action =>'show'}, :id=>fu.user_id) do%>
+			<% user = User.find(fu.user_id)%>
+			<%= user.name %><br />
+			<%= image_tag user.image_url.to_s, :size => '150x150' %><br />
+		<%end%>
+		<table>
+			<tr>
+				<th> kosher?</th>
+				<td><%=user.kosher?%></td>
+			</tr>
+			<tr>
+				<th>status</th>
+				<td><%=fu.coming%></td>
+			</tr>
+	
+		</table>
+</div>	

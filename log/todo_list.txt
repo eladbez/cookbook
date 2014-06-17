@@ -1,0 +1,5 @@
+ 
+ user model:
+ 1) the friendship option needs creation. first see the advanced 
+    rails course to understand the build function in the instruction movie bookmark  
+  

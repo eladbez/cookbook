@@ -1,0 +1,15 @@
+<%=f.fields_for :groceries do |ff|%>
+		<table summey="groceries">
+			<tr>
+				<th><%=ff.label(:quantity)%></th>
+				<th><%=ff.label(:measure)%></th>
+				<th><%=ff.label(:name, "grocery name")%></th>
+			</tr>
+			<tr>
+				<td><%=ff.text_field(:quantity)%></td>
+				<td><%=ff.text_field(:measure)%></td>
+				<td><%=ff.text_field(:name)%></td>
+			</tr>
+		</table>
+	<%end%>
+	

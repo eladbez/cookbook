@@ -1,19 +1,24 @@
+
+
 <h1>let the feast begin!!</h1>
 <p>please enter all feast deatails</p><br />
 <%= form_for(:feast, :url=>{:action=>'create'}) do |f|%>
 
-	
+		<%= f.label("feast name", :name)%><br /><br />
+		<%= f.text_field(:name) %> <br /><br />
 		<%= f.label("feast time", :feast_time)%><br /><br />
 		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %><br /><br />
-	
-	
-		<%=f.label("feast place", :feast_place)%><br /><br />
+		<%= f.label("feast place", :feast_place)%><br /><br />
 		<%= f.text_field(:feast_place) %> <br /><br />
-
+		upload image file <br /><br />
+		<%= f.file_field :image %> <br /><br />
+		
 <h2>participants
+	<% @fields = render(partial: 'participation_fields', locals: {f: f})%>
 	
 	<u>
-		 <%= link_to '#', :onclick => "add_par(); return false;",class: "right" do %>
+		 <%= link_to '#', :onclick => "add_par(); return false;",class: "right",id: "try", 
+             data: {content: "#{@fields}"} do %>
 		 <%= image_tag('add_participants.png', :size => '100x100', :alt => 'Photo Gallery') %>
 		 <%end%>
     </u>
@@ -21,24 +26,73 @@
 
 <br /><br /><br />	 
 
-	<div id ="par">
-		<% f.fields_for :participations do |fp| %>
-			
-			<% fp.hidden_field :_destroy %>
-			<div id="add_field">
-				
-			</div>
-		<%end%>	
-	</div>		
-	
-	<div id="addy">
-				
-	</div>
-	<%=link_to_function "addy", "addy()"%>		
+	<%= content_tag "div", id: "par", data: {myid: @myself.id, myname: @myself.name, myimage: @myself.image} do%>
+		<table>
+			<tr>
+				<th>participant</th>
+				<th>assignment</th>
+			</tr>
+			</table>
 		
-<%=submit_tag("start the feast")%>
+		
+		
+		
+	<% end %>		
 
+<br /><br /><br /><br /><br /><br />
+
+<h2>dishes
+	<% @fields2 = render(partial: 'course_fields', locals: {f: f})%>
+	<u>
+		 <%= link_to '#', :onclick => "add_course(); return false;",class: "right",id: "add_course", 
+             data: {content: "#{@fields2}"} do %>
+		 <%= image_tag('add_dish.png', :size => '100x100', :alt => 'Photo Gallery') %>
+		 <%end%>
+    </u>
+</h2>	
+
+<br /><br /><br />	 
+
+	<div id ="course">
+		<table>
+			<tr>
+				
+				
+			</tr>
+			
+		</table>		
+	</div>	
+<br /><br />
+	 <%=submit_tag "initiate feast"%>
 <%end%> <!-- form end -->
 
 
 
+
+
+
+
+
+
+
+
+	
+	
+	<%if false%>
+	<div id="addy">
+	</div>
+	<% @fields = render(partial: 'participations_fields', locals: {f: f})%>	
+	
+	<%= link_to_function "addy","addy()", 
+		data: {try:@try, content: "#{@fields}"}, id: 'try'%>		
+	
+	<%end%>		
+
+<!--
+'<p>hello</p>
+								    <label for="feast_name">feast name</label>
+									<br><br>
+									<input id="feast_name" name="feast[name]" type="text" value="has no name">
+									<br><br>
+									'}, id: 'try')
+										-->

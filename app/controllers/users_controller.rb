@@ -18,10 +18,10 @@ class UsersController < ApplicationController
   
   def show
     
-    #this one needs rechecking
     @user = User.find(params[:id])
     @myself = @user.id==session[:user_id]
-    @notmyfriend= @user.friends.where("user_id = session[:user_id]").blank?
+    @notmyfriend = @user.friends.blank?
+    @friends = @user.friends.to_a 
     
     if session[:feast_id] 
       not_invited= Participation.where("feast_id=#{session[:feast_id]} AND user_id=#{@user.id}").blank?
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
   end
   
   def search
-  
+    
   end
   
   def results

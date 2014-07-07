@@ -9,7 +9,7 @@ class DishesController < ApplicationController
   
   def sort _form
   end
-  
+ 
   def list
     @results=search
   end
@@ -61,7 +61,16 @@ class DishesController < ApplicationController
     redirect_to(:action => 'sort_form')
   end
   
+  def search_form
+     render layout: "user"
+  end
   
+  def results
+      @results=search
+      render layout: "user"
+  end
+   
+   
    private
     
      def dish_params
@@ -78,8 +87,6 @@ class DishesController < ApplicationController
       name_s=params[:name]
       taste_s=params[:taste]
       culture_s=params[:culture]
-      mealpart_s=params[:mealpart]
-      recipe_s=params[:recipe]
       
       unless name_s.blank?
         dish_s=dish_s.where(["name LIKE ?","%#{name_s}%"])
@@ -91,6 +98,11 @@ class DishesController < ApplicationController
       unless culture_s.blank?
         dish_s=dish_s.where(:culture => culture_s)
       end
+      
+   if false
+      mealpart_s=params[:mealpart]
+      recipe_s=params[:recipe]
+     
       unless mealpart_s.blank?
         dish_s=dish_s.where(:mealpart => mealpart_s)
       end
@@ -98,6 +110,9 @@ class DishesController < ApplicationController
       unless recipe_s.blank?
         dish_s=dish_s.where(["recipe LIKE ?","%#{recipe_s}%"])
       end
+   end
+    
+    
       return dish_s
     end
 end

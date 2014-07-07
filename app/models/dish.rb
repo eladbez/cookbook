@@ -5,7 +5,7 @@ class Dish < ActiveRecord::Base
   has_many :belongings
   has_many :users, :through => :belongings
   
-  has_many :courses
+  has_many :courses, dependent: :destroy
   has_many :feasts, :through => :course
   
   has_many :groceries, :as => :needed 

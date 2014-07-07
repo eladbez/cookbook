@@ -50,6 +50,8 @@ group :development do
   gem 'meta_request'
 end
 
+gem 'nested_form'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

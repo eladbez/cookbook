@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
   mount_uploader :image, ImageUploader
   
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :feasts, :through => :participations
   
   has_many :belongings
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :in_feast_invt, :class_name => 'feast_invt' , :foreign_key => 'receiver_id', :as => :invitable
   
   has_many :friendships
-  has_many :friends, :through => :friendship 
+  has_many :friends, :through => :friendships 
   # the friendship option needs creation. first see the advanced 
   # rails course to understand the build function in the instruction movie bookmark  
   

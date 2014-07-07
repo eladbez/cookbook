@@ -1,0 +1,28 @@
+<%=puts @results%>
+
+<h2><u>dish results: </u></h2>
+	
+		
+	<table summery="dish lists">
+		<tr>	
+			<th>name</th>
+			<th><u>&nbsp;</u></th>
+			<th>taste</th>	
+			<th>culture</th>
+			<th><u>&nbsp;</u></th>
+		</tr>
+<% unless @results.blank? %>
+<% @results.each do |dish| %>
+	<tr>
+		<td><%= link_to(dish.name, {:action =>'show',:id => dish.id}, :class => 'action')%></td>
+		<td><%= link_to(image_tag(dish.image_url.to_s, :size => '50x50'), {:action =>'show',:id => dish.id}, :class => 'action')%></td>
+		<td><%= dish.taste %></td>
+		<td><%= dish.culture %></td>
+		<td><%= button_to "add dish",'#', :onclick => "(window.opener).add_dish(this); return false;", :data => {dishid: dish.id,dishname: dish.name,imgsrcd: dish.image} %>
+</td>
+	</tr>
+	<br />
+	<hd />
+<%end%>
+<%end%>
+</table>

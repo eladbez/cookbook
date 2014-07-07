@@ -1,0 +1,29 @@
+
+<h2><u>food search - search for dishes</u></h2>
+
+<%= form_tag(:action=>'results') do %>
+<table>
+	<tr>
+		<th><%=label_tag(:name)%></th>
+		<th><%=label_tag(:taste)%></th>
+	</tr>
+		
+	<tr>	
+		<td><%= text_field_tag(:name) %></td>
+		<td><%=select_tag("taste",options_for_select(["sweet","sweet-sour","sour","piquant","spicy","spicy-sweet","salty","???another???"]))%></td>
+	</tr>
+	<tr>
+		<th><%=label_tag(:culture)%></th>
+	</tr>
+
+	<tr>
+		<td><%= text_field_tag(:culture) %></td>
+	</tr>
+
+</table>
+  	
+		<%= submit_tag "create recipe", :type => :image,:src => image_path("cook2.png") %>
+ 		
+ 		
+	</div>
+<% end %>

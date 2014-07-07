@@ -26,7 +26,7 @@
 
 <br /><br /><br />	 
 
-	<%= content_tag "div", id: "par", data: {myid: @myself.id, myname: @myself.name, myimage: @myself.image} do%>
+	<div id ="par">
 		<table>
 			<tr>
 				<th>participant</th>
@@ -37,7 +37,7 @@
 		
 		
 		
-	<% end %>		
+	</div>		
 
 <br /><br /><br /><br /><br /><br />
 
@@ -55,6 +55,11 @@
 
 	<div id ="course">
 		<table>
+			<tr>
+				
+				
+			</tr>
+			
 		</table>		
 	</div>	
 <br /><br />
@@ -80,6 +85,23 @@
 	
 	<%= link_to_function "addy","addy()", 
 		data: {try:@try, content: "#{@fields}"}, id: 'try'%>		
+	
+	<tr>
+				<td><div class="user_block ui-droppable">
+						<%=link_to({action: 'show', controller: 'users', :id => session[:user_id]}, :id => session[:user_id]) do%>
+							<%=image_tag(dish.image_url.to_s, :size => '50x50'), {:action =>'show',:id => dish.id}, :class => 'action')%><br>amit
+						<% end %><br>
+						<a class="cl_both" href="#" onclick="remove_fields(this); return false;">remove</a>	
+						<input id="1404657668085" name="feast[participations][user_id]" type="hidden" value="7"> 
+						<input id="feast_participations__destroy" name="feast[participations][_destroy]" type="hidden" value="false">
+						<div data-obcontent="
+							<input id=&quot;feast_participations_obligations_attributes_new_obli_dish_id&quot; name=&quot;feast[participations][obligations_attributes][new_obli][dish_id]&quot; type=&quot;hidden&quot; ></div> 
+							<input id=&quot;feast_participations_obligations_attributes_new_obli__destroy&quot; name=&quot;feast[participations][obligations_attributes][new_obli][_destroy]&quot; type=&quot;hidden&quot; value=&quot;false&quot; />
+						"></div>
+					</div></td>
+				<td></td>
+			</tr>
+		
 	
 	<%end%>		
 

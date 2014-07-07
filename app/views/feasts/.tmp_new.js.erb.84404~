@@ -1,0 +1,61 @@
+
+var dishName;
+var notFirst;
+var userId;
+
+function isdefined( variable)
+{
+    return (typeof(window[variable]) == "undefined")?  false: true;
+}
+
+if (chose == "user"){
+	var new_id1 = new Date().getTime();
+	var new_id2 = new Date().getTime() + 1;
+	var regexp1 = new RegExp("feast_participations_user_id", "g");
+	var regexp2 = new RegExp("new_par", "g");
+$("#par").find(".user_block").last().append($("#try").data('content').replace(regexp1, new_id1).replace(regexp2, new_id2));
+$("#" + new_id1).val("<%=params[:user_id]%>");
+ };
+ 
+ if (chose == "dish"){
+	var new_id3 = new Date().getTime();
+	var new_id4 = new Date().getTime() + 1;
+	var regexp3 = new RegExp("feast_courses_dish_id", "g");
+	var regexp4 = new RegExp("new_par", "g");
+$("#course").find(".dish_block").last().append($("#add_course").data('content').replace(regexp3, new_id3).replace(regexp4, new_id4));
+$("#" + new_id3).val("<%=params[:user_id]%>");
+ };
+ 
+ if (chose == "assign"){
+ 	userId = "<%=params[:user_id]%>";
+	var new_id5 = new Date().getTime();
+	var new_id6 = new Date().getTime() + 1;
+	var regexp5 = new RegExp("feast_participations_obligations_attributes_new_obli_dish_id", "g");
+	var regexp6 = new RegExp("new_obli", "g"); 	
+	
+	var obcontent = $("a#<%=params[:user_id]%>").parent().find("div").data('obcontent').replace(regexp5, new_id5).replace(regexp6, new_id6);
+	$("a#<%=params[:user_id]%>").parent().find("input").last().before(obcontent);
+	$("#" + new_id5).val("<%=params[:dish_id]%>");
+	
+	 
+	 setTimeout(function () {
+	 	var dsply = $("#par").find("a#<%=params[:user_id]%>").closest("tr").find("td:last").attr("style");	 	
+      	if (dsply != undefined){
+			$("#par").find("a#<%=params[:user_id]%>").closest("tr").append("<td>");
+		}
+		$("#par").find("a#<%=params[:user_id]%>").closest("tr").find("td:last").append("<%=params[:dish_name]%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#par").find("a#<%=params[:user_id]%>").closest("tr").find("td:last").append("<img alt='cancel - x' class='x-pic' height='30' src='/assets/x-blue.png' width='30'>");
+		$("#par").find("a#<%=params[:user_id]%>").closest("tr").find("img:last").hover(
+		function(){
+			$(this).attr("src","/assets/x-red.png");
+			},
+		function(){
+			$(this).attr("src","/assets/x-blue.png");
+		});
+		$("#par").find("a#<%=params[:user_id]%>").closest("tr").find("img").last().click(function(){
+			$("#par").find("a#<%=params[:user_id]%>").closest("tr").find("td").last().hide();
+			$("#par").find("input[id *="+new_id6+"__destroy]").val("1");
+		});
+	}, 200);
+	
+ };

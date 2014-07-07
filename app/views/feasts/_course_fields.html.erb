@@ -1,0 +1,8 @@
+<br />
+<%= link_to_function "remove","remove_fields_dish(this)", :class => "cl_both" %>	
+<%= f.fields_for(:courses, Course.new, child_index: "new_course", class: "fields") do |fc| %>
+		<%=fc.hidden_field(:dish_id)%> 
+		<%=fc.hidden_field(:_destroy,value: false)%>
+<%end%>
+	
+	

@@ -1,0 +1,21 @@
+<div class="display block">
+		<% dish = Dish.find(f.dish_id) %>
+		<% link_to({:controller=>'dishes', :action =>'show'}, :id=>f.dish_id) do%>
+				<%= dish.name %><br />
+				<%= image_tag dish.image_url.to_s, :size => '150x150' %><br />
+		<%end%> <!-- link_to end -->
+		
+		
+		<% dish_users = User.joins(participations: {obligations: :dish}).where(dish: {id: dish.id}).to_a %>
+		<%= puts "bringers:"%>
+		<% dish_users.each do |d_user| %>
+				<table>
+		 			<tr>
+						<td><%= puts "#{d_user.name} " %></td>
+						
+						<td><%= puts f.agreed%>
+					</tr>						
+				</table>
+
+				
+</div>	

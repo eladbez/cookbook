@@ -16,8 +16,7 @@ function add_par(){
 function printUser(userIdF,userNameF,imgSrcF){
 	var a  = document.createElement("a");
 	a.setAttribute("href","/users/show?id="+userIdF);
-	a.setAttribute("id",new Date().getTime());
-	var aid = a.id;
+	a.setAttribute("id",userIdF);
 	var aText = document.createTextNode(userNameF);
 	var img = document.createElement("img");
 	img.setAttribute("alt","user picture");
@@ -32,13 +31,13 @@ function printUser(userIdF,userNameF,imgSrcF){
 	a.appendChild(brk);
 	a.appendChild(aText);
 	myDiv.appendChild(a); 
-	$("#par").find("tbody").append("<tr><td>");
+	$("#par").find("table").append("<tr><td>");
 	$("#par").find("td").last().append(myDiv);
 	$("#par").find("tr").last().append("<td>");
 	$(".user_block").last().droppable({drop: function(){
 		$(this).effect( "bounce" );
 		chose = "assign";
-		$.get("http://localhost:3000/feasts/new", {aid: aid, dish_id: dishId, dish_name: dishName}, null, "script");
+		$.get("http://localhost:3000/feasts/new", {user_id: $(this).find("a").attr("id"), dish_id: dishId, dish_name: dishName}, null, "script");
 	}});
 	chose = "user";
 	$.get("http://localhost:3000/feasts/new", {user_id: userId}, null, "script");	
@@ -59,7 +58,6 @@ function remove_fields(link){
 	$(link).prev("input[type=hidden]").val("1");
 	$(link).parent().hide();
 	$(link).hide();
-	$(link).closest("tr").find("td:last").find("img").trigger("click");
 }
 
 //end the add participation part------------------------------------------------------
@@ -81,7 +79,7 @@ function add_course(){
 function printDish(dishIdF,dishNameF,imgSrcF){
 	var a = document.createElement("a");
 	a.setAttribute("href","/dishes/show?id="+dishIdF);
-	a.setAttribute("id",new Date().getTime());
+	a.setAttribute("id",dishIdF+"d");
 	var aText = document.createTextNode(dishNameF);
 	var img = document.createElement("img");
 	img.setAttribute("alt","dish picture");
@@ -122,21 +120,15 @@ function add_dish(butt){
 }		
 
 
-function remove_fields_dish(link){
-	$(link).prev("input[type=hidden]").val("1");
-	$(link).parent().hide();
-	$(link).hide();
-}
 
 
 
 //end the add course part------------------------------------------------------------
-
-/* this was suposed to add loged in user automatically but i changed my mind.
-(document).ready(function(){
-		var t1= $("#par").data('myid');
-		var t2= $("#par").data('myname');
-		var t3= $("#par").data('myimage').image.url;
-		printUser(t1,t2,t3);
-});
+//add a  $ sign before document....
+//add data to par div so all loged in user data is available.
+// than initiate print user so loged in user will appear.
+/*(document).ready(function(){
+		alert("my id : <%=session[:user_id]%>");
+		printUser(
+}
 */

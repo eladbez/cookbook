@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+    <% include_gon %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    	<title>search for a user <%= "| #{@username}" if @username %></title>
+   	 <meta name="author" content="elad bezalel">
+  	 <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+	 <%= javascript_include_tag('application')%>
+   	 <%= stylesheet_link_tag('users') %>
+  </head>
+  
+<body>
+	
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+
+     <% if !flash[:notice].blank? %>
+        <div class="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    <br />
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	
+<div id="content">
+      
+        <%= yield %>
+
+<footer>
+	
+      	<p id="copyright">&copy; elad bezalel all rights reserved</p>
+  
+</footer>
+      
+
+</div>   
+
+  </body>
+  
+	
+</html>
+      
+      	

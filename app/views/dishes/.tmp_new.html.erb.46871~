@@ -1,0 +1,25 @@
+<%=error_messages_for(@dish)%>
+<%=params.inspect%>
+<hr />
+<h2>add your recipe</h2>
+
+<%= link_to("<<back to recipe search",:action=>'sort_form') %>
+
+<div class="new dish">	
+<%= form_for(:dish, :url => {:action => 'create'}, :multipart => true) do |f| %>
+	<%= render(:partial => "form", :locals => {:f => f})%>
+<div class="submit buttons">
+ <%= f.submit("Catalog recipe") %>
+</div>
+
+<% end %>
+
+</div>
+
+
+
+
+
+
+
+

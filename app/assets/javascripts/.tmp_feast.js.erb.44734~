@@ -1,0 +1,65 @@
+var orgWindow;
+var searchWindow;
+var imgSrc;
+var userId;
+var userName;
+ 
+
+function add_par(){
+			  orgWindow = window;			 
+			  searchWindow = window.open("http://localhost:3000/users/search", "search","left=200, top=100, height=300, width=300, menubar=yes");
+			  searchWindow.focus();
+		}	
+				
+function printUser(userIdF,userNameF,imgSrcF){
+	var a  = document.createElement("a");
+	a.setAttribute("href","/users/show");
+	a.setAttribute("id",userIdF);
+	var aText = document.createTextNode(userNameF);
+	var img = document.createElement("img");
+	img.setAttribute("alt","user picture");
+	img.setAttribute("src",imgSrcF);
+	img.setAttribute("height","100");
+	img.setAttribute("width","100");
+	outerDiv = document.getElementById("par");
+	myDiv = document.createElement("div");
+	myDiv.className = "user_block";
+	a.appendChild(img);
+	var brk = document.createElement("br");
+	a.appendChild(brk);
+	a.appendChild(aText);
+	myDiv.appendChild(a);
+	outerDiv.appendChild(myDiv);
+	$.get("http://localhost:3000/feasts/print", {user_id: userId}, null, "script");	
+	
+}
+		
+function add_user(butt){
+	alert('hello from add_user'); 
+	userId = $(butt).data('userid');
+	userName = $(butt).data('username');
+	imgSrc = $(butt).data('imgsrc').image.url;
+	searchWindow.close();
+	orgWindow.focus();
+	printUser(userId,userName,imgSrc);
+	
+}		
+		
+
+function remove_fields(link){
+	$(link).prev().attr({value: 1});
+	$(link).parent.hide;
+
+}
+
+function addy(){
+
+alert($("#try").data("try"));
+/*
+	$.get("/feasts/print", {user_id: userId},null,"script");
+	*/	
+}	
+	
+
+
+

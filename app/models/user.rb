@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   has_many :s_friend_invt, :class_name => 'friend_invt' , :foreign_key => 'sender_id'
   has_many :in_friend_invt, :class_name => 'friend_invt' , :foreign_key => 'receiver_id'
   
-  has_many :s_feast_invt, :class_name => 'feast_invt' , :foreign_key => 'sender_id', :as => :invitable
-  has_many :in_feast_invt, :class_name => 'feast_invt' , :foreign_key => 'receiver_id', :as => :invitable
+  has_many :s_feast_invt, :class_name => 'feast_invt' , :foreign_key => 'sender_id' 
+  has_many :in_feast_invt, :class_name => 'feast_invt' , :foreign_key => 'receiver_id'
   
   has_many :friendships
   has_many :friends, :through => :friendships 

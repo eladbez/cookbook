@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605112508) do
+ActiveRecord::Schema.define(version: 20140708130623) do
 
   create_table "belongings", force: true do |t|
     t.integer  "user_id"
@@ -51,13 +51,6 @@ ActiveRecord::Schema.define(version: 20140605112508) do
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id", using: :btree
 
   create_table "feast_invts", force: true do |t|
-    t.integer  "invitable_id"
-    t.string   "invitable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "feastinvt", force: true do |t|
     t.integer "sender_id"
     t.integer "receiver_id"
     t.integer "feast_id"
@@ -72,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140605112508) do
     t.datetime "updated_at"
     t.string   "image"
     t.string   "name",        default: "has no name"
+    t.text     "content"
   end
 
   create_table "friend_invts", force: true do |t|

@@ -87,6 +87,7 @@ class DishesController < ApplicationController
       name_s=params[:name]
       taste_s=params[:taste]
       culture_s=params[:culture]
+      id_s=params[:id] 
       
       unless name_s.blank?
         dish_s=dish_s.where(["name LIKE ?","%#{name_s}%"])
@@ -97,6 +98,10 @@ class DishesController < ApplicationController
       end
       unless culture_s.blank?
         dish_s=dish_s.where(:culture => culture_s)
+      end
+      
+      unless id_s.blank?
+        dish_s=dish_s.where(:user_id => id_s)
       end
       
    if false

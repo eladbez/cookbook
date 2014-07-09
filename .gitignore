@@ -24,6 +24,16 @@ doc/
 .idea
 .secret
 
+/config/initializers/
+secret_token.rb
+
+app/yiews/backup
+
+
+
+
+
+
 
 
 

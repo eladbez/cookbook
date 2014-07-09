@@ -1,0 +1,64 @@
+<h1>let the feast begin!!</h1>
+<p>please enter all feast deatails</p>
+<% form_for(:feast, :url=>{:action=>'create'}) do |f|%>
+<table>
+	<tr>
+		<th<%=f.label("feast time", :feast_time)%></th>
+		<th><%=f.label("feast place", :feast_place)%></th>
+	</tr>
+	<tr>
+		<td><%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %></td>
+		<td><%= f.text_field(:feast_place) %> </td>
+	</tr>
+		<%=submit_tag("start the feast")%>
+</table>
+<%end%>
+
+<h2>participants</h2>
+	
+<div class="add_participants">
+	 <%= image_tag('add_participants.png', :size => '60x30', :alt => 'Photo Gallery') %>
+</div>
+<%f.fields_for :participations do |fu|%>
+	<%= render(:partial => "participations_fields", :locals => {:fu => fu})%>
+<%end%>
+
+
+
+
+<h2>dishes</h2>
+
+
+<div class="add_">
+	 <%= image_tag('add_participants.png', :size => '60x30', :alt => 'Photo Gallery') %>
+</div>
+<%end%>
+
+<% dishes.each do |dish| %>
+	<div class="display block">
+		<% link_to({:controller=>'dishes', :action =>'show'}, :id=>dish.id) do%>
+				<%= dish.name %><br />
+				<%= image_tag dish.image_url.to_s, :size => '150x150' %><br />
+		<%end%>
+		
+		
+		<% dish_users = User.joins(participations: {obligations: :dish}).where(dish: {id: dish.id}).to_a %>
+		<%= puts "bringers:"%>
+		<% dish_users.each do |d_user| %>
+				<table>
+					<% dish_ob = Obligation.joins(:participation, :dish).where(dishes: {id: dish.id}).where(participations: {user_id: d_user.id}).where(participations: {feast_id: 
+@this_id}) %>
+					<tr>
+						<td><%= puts "#{d_user.name} " %></td>
+						
+						<td><%= puts dish_ob.agreed%>
+					</tr>						
+				</table>
+		<%end%>
+
+				<%= link_to("ask to bring" , :id => dish.id, :class => "add_participants")%>
+				<!-- build the user search with a dish option --> 
+		</div>	
+<%end%>
+
+

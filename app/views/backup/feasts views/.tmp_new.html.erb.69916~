@@ -1,0 +1,40 @@
+<h1>let the feast begin!!</h1>
+<p>please enter all feast deatails</p><br />
+<%= form_for(:feast, :url=>{:action=>'create'}) do |f|%>
+
+	
+		<%= f.label("feast time", :feast_time)%><br /><br />
+		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %><br /><br />
+	
+	
+		<%=f.label("feast place", :feast_place)%><br /><br />
+		<%= f.text_field(:feast_place) %> <br /><br />
+
+<h2>participants
+	
+	<u>
+		 <%= link_to '#', :onclick => "add_par(); return false;",class: "right" do %>
+		 <%= image_tag('add_participants.png', :size => '100x100', :alt => 'Photo Gallery') %>
+		 <%end%>
+    </u>
+</h2>	
+
+<br /><br /><br />	 
+
+	<div id ="par">
+		
+	</div>		
+	
+	<div id="addy">
+				
+	</div>
+	<%=@try%>
+	
+	<%=link_to_function "addy", "addy()",data: {try:@try},id: "try"%>		
+		
+<%=submit_tag("start the feast")%>
+
+<%end%> <!-- form end -->
+
+
+

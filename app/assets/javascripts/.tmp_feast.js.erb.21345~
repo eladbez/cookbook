@@ -56,7 +56,7 @@ function add_user(butt){
 		
 
 function remove_fields(link){
-	$(link).parent().find("input[id*=_destroy]").val("1");
+	$(link).prev("input[type=hidden]").val("1");
 	$(link).parent().hide();
 	$(link).hide();
 	$(link).closest("tr").find("td:last").find("img").trigger("click");
@@ -103,8 +103,7 @@ function printDish(dishIdF,dishNameF,imgSrcF){
 	
 	$(".dish_block").draggable({ 
 		start: function(){
-	dishId = Number($(this).find("a").attr("href").slice(8,9));
-	
+	dishId = Number($(this).find("a").attr("id").slice(0,-1));
 	},
 	revert: true
 	});	
@@ -124,7 +123,7 @@ function add_dish(butt){
 
 
 function remove_fields_dish(link){
-	$(link).parent().find("input[id*=_destroy]").val("1");
+	$(link).prev("input[type=hidden]").val("1");
 	$(link).parent().hide();
 	$(link).hide();
 }

@@ -7,7 +7,7 @@ class DishesController < ApplicationController
     redirect_to('sort_form')
   end
   
-  def sort _form
+  def sort_form
   end
  
   def list

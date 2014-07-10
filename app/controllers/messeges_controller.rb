@@ -1,4 +1,5 @@
 class MessegesController < ApplicationController
+  
   def new
     @messege = Messege.build
   end

@@ -1,0 +1,13 @@
+<%= error_messages_for(@user)%>
+
+<%= link_to("i don't want to sign in",{:controller => 'dishes', :action => 'sort_form'})%><br />
+
+<h2>welcome to cook book! sign in !</h2><br />
+
+<%= form_for(:user, :url => {:action => 'create'}, :multipart => true) do |f| %>
+	<%= render(:partial => 'form', :locals => {:f => f})%>
+<%=f.submit("sign in")%>
+<%end%>
+
+
+ 

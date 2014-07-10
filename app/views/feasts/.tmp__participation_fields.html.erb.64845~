@@ -1,5 +1,4 @@
 <br />
-<%= link_to_function "remove","remove_fields(this)", :class => "cl_both" %>	
 <%new_object = Feast.reflect_on_association(:participations).klass.new%>
 <%= f.fields_for(:participations, new_object, child_index: "new_par", class: "fields") do |fp| %>
 		<%=fp.hidden_field(:user_id)%> 
@@ -9,5 +8,6 @@
 			
 		</div>
 <%end%>
+<%= link_to_function "remove","remove_fields(this)", :class => "cl_both" %>	
 	
 	

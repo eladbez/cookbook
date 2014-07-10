@@ -51,6 +51,7 @@ group :development do
 end
 
 gem 'nested_form'
+#gem 'cocoon'
 
 
 # Use ActiveModel has_secure_password

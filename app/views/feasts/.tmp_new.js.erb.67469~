@@ -9,27 +9,33 @@ function isdefined( variable)
 }
 
 if (chose == "user"){
-	var new_id2 = new Date().getTime();
+	var new_id1 = new Date().getTime();
+	var new_id2 = new Date().getTime() + 1;
+	var regexp1 = new RegExp("feast_participations_user_id", "g");
 	var regexp2 = new RegExp("new_par", "g");
-$("#par").find(".user_block").last().append($("#try").data('content').replace(regexp2, new_id2));
-$("#feast_participations_attributes_" + new_id2 + "_user_id").val("<%=params[:user_id]%>");
+$("#par").find(".user_block").last().append($("#try").data('content').replace(regexp1, new_id1).replace(regexp2, new_id2));
+$("#" + new_id1).val("<%=params[:user_id]%>");
  };
  
  if (chose == "dish"){
-	var new_id4 = new Date().getTime();
-	var regexp4 = new RegExp("new_course", "g");
-$("#course").find(".dish_block").last().append($("#add_course").data('content').replace(regexp4, new_id4));
-$("#feast_courses_attributes_" + new_id4 + "_dish_id").val("<%=params[:dish_id]%>");
+	var new_id3 = new Date().getTime();
+	var new_id4 = new Date().getTime() + 1;
+	var regexp3 = new RegExp("feast_courses_dish_id", "g");
+	var regexp4 = new RegExp("new_par", "g");
+$("#course").find(".dish_block").last().append($("#add_course").data('content').replace(regexp3, new_id3).replace(regexp4, new_id4));
+$("#" + new_id3).val("<%=params[:dish_id]%>");
  };
  
  if (chose == "assign"){
  	
-	var new_id6 = new Date().getTime();
+	var new_id5 = new Date().getTime();
+	var new_id6 = new Date().getTime() + 1;
+	var regexp5 = new RegExp("feast_participations_obligations_attributes_new_obli_dish_id", "g");
 	var regexp6 = new RegExp("new_obli", "g"); 	
 	
-	var obcontent = $("a#<%=params[:aid]%>").parent().find("div").data('obcontent').replace(regexp6, new_id6);
+	var obcontent = $("a#<%=params[:aid]%>").parent().find("div").data('obcontent').replace(regexp5, new_id5).replace(regexp6, new_id6);
 	$("a#<%=params[:aid]%>").parent().find("input").last().before(obcontent);
-	$("input[id*=obligations_attributes_" + new_id6 + "_dish_id]").val("<%=params[:dish_id]%>");
+	$("#" + new_id5).val("<%=params[:dish_id]%>");
 	
 	 
 	 setTimeout(function () {
@@ -61,6 +67,3 @@ $("#feast_courses_attributes_" + new_id4 + "_dish_id").val("<%=params[:dish_id]%
 	}, 200);
 	
  };
-
- 
- 

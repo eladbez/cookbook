@@ -1,22 +1,19 @@
 FirstProject::Application.routes.draw do
-  resources :replies
-
-  resources :posts
-
-  get "messeges/new"
-  get "messeges/create"
-  get "messeges/list"
-  get "messeges/show"
-  get "messeges/delete"
-  get "messeges/destroy"
-  get "participation/create"
-  get "participation/destroy"
-  get "friend_invt/create"
-  get "friend_invt/destroy"
-  get "feast_invt/create"
-  get "feast_invt/destroy"
-  get "access/login"
-  # The priority is based upon order of creation: first created -> highest priority.
+  
+#  get "messeges/new"
+#  get "messeges/create"
+#  get "messeges/list"
+#  get "messeges/show"
+#  get "messeges/delete"
+#  get "messeges/destroy"
+#  get "participation/create"
+#  get "participation/destroy"
+#  get "friend_invt/create"
+#  get "friend_invt/destroy"
+#  get "feast_invt/create"
+#  get "feast_invt/destroy"
+ # get "access/login"
+ # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
@@ -30,19 +27,60 @@ FirstProject::Application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
- if false   #
-  resources :dishes do
+
+ resources :dishes do 
+    
     collection do
       get :sort_form
+      get :search_form
+      post :results
+      post :list
+    end
+  end
+  
+ resources :feasts do
+    member do
+      get :delete
     end
     
     collection do
       get :list
     end
-    
   end
-            #
- end
+        
+  resources :posts
+  
+ resources :users do
+    
+    collection do 
+      get :search
+      post :list
+      post :results
+    end
+  end  
+  
+  resources :access, :only => [:index] do
+    
+    collection do
+      get :login
+      post :attempt_login
+      get :menu
+      get :logout
+    end
+    
+   end
+  
+  resources :feast_invt, :only => [:create, :destroy] 
+  resources :participations, :only => [:create, :destroy] 
+  resources :obligations
+  resources :messeges, :except => [:edit, :update] do
+    collection do
+      get :list
+    end
+  end
+  resources :replies
+      
+    
   # Example resource route with options:
   #   resources :products do
   #     member do
@@ -71,7 +109,7 @@ FirstProject::Application.routes.draw do
   
   
   
-  match ':controller(/:action(/:id))', :via => [:get, :post]
+ # match ':controller(/:action(/:id))', :via => [:get, :post]
   
   
   

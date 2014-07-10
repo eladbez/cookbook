@@ -1,12 +1,7 @@
 
-<%@users.each do |u|%>
-
-<aside>
-
-	<%= button_to "add user",'#', :onclick => "(window.opener).add_user(this); return false;", :data => {userid: u.id,username: u.name,imgsrc: u.image}, id: "button"  %>
-</aside>	
+<%users.each do |u|%>
 	<div class="user">
-		<%= link_to u do %>
+		<%= link_to({:controller => 'users',:action =>'show'}) do %>
 			<%= image_tag(u.image_url.to_s, :size => '50x50')%><br />
 			<%= u.name %>
 		<%end%>

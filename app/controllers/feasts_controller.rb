@@ -14,6 +14,7 @@ class FeastsController < ApplicationController
   def new
    
     @feast= Feast.new
+    @feast.participations.build
     @myself = User.find(session[:user_id])
      respond_to do |format| 
       format.html 

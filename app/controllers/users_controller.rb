@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   
   def index
     list
-    render('list')
+    redirect_to(:action => 'list')
   end
   
   def list

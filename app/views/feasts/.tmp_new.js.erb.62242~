@@ -16,7 +16,6 @@ $("#feast_participations_attributes_" + new_id2 + "_user_id").val("<%=params[:us
 	var mng = "<%=params[:mng]%>";
 	if (mng==1){
 		$("#feast_participations_attributes_" + new_id2 + "_manager").val("true");
-		mng = 0;
 		};
 
  };

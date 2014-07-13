@@ -29,7 +29,7 @@ module ApplicationHelper
     if feast.image.blank?
        image_tag('feast_normal.jpg', :size => '260x260', :alt => 'user picture') 
     else
-       image_tag u.image_url.to_s, :size => '260x260' 
+       image_tag feast.image_url.to_s, :size => '260x260' 
     end
   end
   

@@ -1,14 +1,14 @@
 class FeastsController < ApplicationController
 
   def list
-    @user_feast_m=Feast.joins(participations: :user).where(participations: {manager: true}).to_a
-    @user_feast_p=Feast.joins(participations: :user).where(participations: {manager: false}).to_a
+    @user_feast_m=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id]}).where(participations: {manager: true}).to_a
+    @user_feast_p=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id]}).where(participations: {manager: false}).to_a
   end
 
   def show
-    @feast=feast.find(params[:id])
-    @users=@feast.users
-    @dishes=(Dish.joins(obligations: {participation: :feast}).where(feast: {id:@feast.id }).to_a + @feast.dishes).compact
+    @feast=Feast.find(params[:id])
+    @users=@feast.users.to_a
+    @dishes=@feast.dishes.to_a
   end
 
   def new

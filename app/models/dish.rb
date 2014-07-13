@@ -11,7 +11,7 @@ class Dish < ActiveRecord::Base
   has_many :groceries, :as => :needed 
   
   has_many :obligations
-  has_many :participations, :through => :obligation 
+  has_many :participations, :through => :obligations 
   
 #  validates :name, presence: true
 #  validates :taste, presence: true

@@ -4,11 +4,11 @@
 
 <%if false%>
 <% if @notmyfriend %>
-	<%=button_to "offer friendship",{:controller => 'friend_invts', :action => 'create'}, :id => @user.id %>		
+	<%=button_to "offer friendship",{:controller => 'FriendInvt', :action => 'create'}, :id => @user.id %>		
 <% end %>	 
 <% end %>	
 <% if @myself %>
-	<%= button_to "edit my profile", {:controller => 'users', :action => 'edit'}, :id  => session[:user_id] %>
+	<%= button_to "edit my profile", {:controller => 'user', :action => 'edit'}, :id  => session[:user_id] %>
 <% end %>
 
 <br />

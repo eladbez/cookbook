@@ -1,4 +1,3 @@
-var mng;
 var orgWindow;
 var searchWindow;
 var imgSrc;
@@ -42,7 +41,7 @@ function printUser(userIdF,userNameF,imgSrcF){
 		$.get("http://localhost:3000/feasts/new", {aid: aid, dish_id: dishId, dish_name: dishName}, null, "script");
 	}});
 	chose = "user";
-	$.get("http://localhost:3000/feasts/new", {user_id: userIdF, mng: mng}, null, "script");	
+	$.get("http://localhost:3000/feasts/new", {user_id: userId}, null, "script");	
 }
 		
 function add_user(butt){
@@ -134,11 +133,11 @@ function remove_fields_dish(link){
 
 //end the add course part------------------------------------------------------------
 
-
-$(document).ready(function(){
-		t1= $("#par").data('myid');
-		t2= $("#par").data('myname');
-		t3= $("#par").data('myimage').image.url;
-		mng = "1";
+/* this was suposed to add loged in user automatically but i changed my mind.
+(document).ready(function(){
+		var t1= $("#par").data('myid');
+		var t2= $("#par").data('myname');
+		var t3= $("#par").data('myimage').image.url;
 		printUser(t1,t2,t3);
 });
+*/

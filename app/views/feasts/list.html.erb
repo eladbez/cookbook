@@ -14,7 +14,7 @@
 
 <%@user_feast_m.each do |f|%>
 <div class="feast">
-	<%=link_to f do%>
+	<%=link_to edit_feast_path(f.id) do%>
 		<%=feast_image(f)%>
 	<%end%>
 
@@ -29,13 +29,13 @@
 		<br /><br /><br />
 
 <h2><u>users</u></h2>		
-		<% users=f.users%>
+		<% users=f.users %>
 
 		<%= render(:partial => 'shared/user_list', :locals => {:users => users}) %>
 
 <h2><u>dishes</u></h2>
 		
-		<%= render(:partial => 'shared/dish_list', :locals => {:dishes => f.dishes})%>			
+		<%= render(:partial => 'feast_dishes', :locals => {dishes: f.dishes,feast: f})%>			
 
 <hr />
 
@@ -53,7 +53,7 @@
 
 <%@user_feast_p.each do |f|%>
 	<div class="feast">
-		<%=link_to f do%>
+		<%=link_to edit_feast_path(f.id) do%>
 			<%=feast_image(f)%>
 		<%end%>
 
@@ -74,7 +74,7 @@
 
 <h2><u>dishes</u></h2>
 		
-		<%= render(:partial => 'shared/dish_list', :locals => {:dishes => f.dishes})%>			
+		<%= render(:partial => 'feast_dishes', :locals => {dishes: f.dishes,feast: f})%>			
 
 <hr />
 

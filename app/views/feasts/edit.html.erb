@@ -1,2 +1,21 @@
-<h1>Feasts#edit</h1>
-<p>Find me in app/views/feasts/edit.html.erb</p>
+<h1><%= @feast.name %></h1>
+
+<%=error_messages_for(@feast)%>
+
+<%= form_for @feast, :multipart => true do |f|%>
+
+<%if @users%>
+	<%i=1%>
+	<% @users.each do |u| %>
+	  <%= content_tag "dfn","", data: {userid: u.id, username: u.name, userimage: u.image } %>
+	  <%i=i+1%>
+	<% end %> 
+<% end %>
+
+	<%=render(:partial => 'form', locals: {f: f})%>
+		
+<%end%> <!-- form end -->
+
+
+
+

@@ -174,7 +174,7 @@ footer {
 }
 .action{
 	color:red;
-	
+	font-size: 100%;
 }
 .photoShow {
  	margin:20px;
@@ -238,21 +238,7 @@ footer {
  	border:none;
 	display:inline-block;
 }
- /*
- .x-icon{
- 	display:inline-block;
-	background-image: url('/assets/blue-c.jpg');
-	border:none;
-	background-size: 111px 111px;
- }
- .x-icon:hover{
-	border:none;
-	display:inline-block;
-	background-image: url('/assets/red-c.jpg');
-	background-size: 111px 111px;
-    background-repeat: no-repeat;
- }
-*/
+
 
 /* some jquery UI classes -------------------------------------- */
 /*

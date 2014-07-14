@@ -2,63 +2,13 @@
 
 <h1>let the feast begin!!</h1>
 <p>please enter all feast deatails</p><br />
+
+<%=error_messages_for(@feast)%>
+
 <%= form_for @feast, :multipart => true do |f|%>
 
-		<%= f.label("feast name", :name)%><br /><br />
-		<%= f.text_field(:name) %> <br /><br />
-		<%= f.label("feast time", :feast_time)%><br /><br />
-		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %><br /><br />
-		<%= f.label("feast place", :feast_place)%><br /><br />
-		<%= f.text_field(:feast_place) %> <br /><br />
-		upload image file <br /><br />
-		<%= f.file_field :image %> <br /><br />
-		
-<h2>participants
-	<% @fields = render(partial: 'participation_fields', locals: {f: f})%>
-	
-	<u>
-		 <%= link_to '#', :onclick => "add_par(); return false;",class: "right",id: "try", 
-             data: {content: "#{@fields}"} do %>
-		 <%= image_tag('add_participants.png', :size => '100x100', :alt => 'Photo Gallery') %>
-		 <%end%>
-    </u>
-</h2>	
+ 	<%=render(:partial => 'form', locals: {f: f})%>
 
-<br /><br /><br />	 
-
-	<%= content_tag "div", id: "par", data: {myid: @myself.id, myname: @myself.name, myimage: @myself.image} do%>
-		<table>
-			<tr>
-				<th>participant</th>
-				<th>assignment</th>
-			</tr>
-			</table>
-		
-		
-		
-		
-	<% end %>		
-
-<br /><br /><br /><br /><br /><br />
-
-<h2>dishes
-	<% @fields2 = render(partial: 'course_fields', locals: {f: f})%>
-	<u>
-		 <%= link_to '#', :onclick => "add_course(); return false;",class: "right",id: "add_course", 
-             data: {content: "#{@fields2}"} do %>
-		 <%= image_tag('add_dish.png', :size => '100x100', :alt => 'Photo Gallery') %>
-		 <%end%>
-    </u>
-</h2>	
-
-<br /><br /><br />	 
-
-	<div id ="course">
-		<table>
-		</table>		
-	</div>	
-<br /><br />
-	 <%=submit_tag "initiate feast"%>
 <%end%> <!-- form end -->
 
 

@@ -13,6 +13,12 @@ if (chose == "user"){
 	var regexp2 = new RegExp("new_par", "g");
 $("#par").find(".user_block").last().append($("#try").data('content').replace(regexp2, new_id2));
 $("#feast_participations_attributes_" + new_id2 + "_user_id").val("<%=params[:user_id]%>");
+	var mng = "<%=params[:mng]%>";
+	if (mng==1){
+		$("#feast_participations_attributes_" + new_id2 + "_manager").val("true");
+		mng = 0;
+		};
+
  };
  
  if (chose == "dish"){
@@ -21,6 +27,7 @@ $("#feast_participations_attributes_" + new_id2 + "_user_id").val("<%=params[:us
 $("#course").find(".dish_block").last().append($("#add_course").data('content').replace(regexp4, new_id4));
 $("#feast_courses_attributes_" + new_id4 + "_dish_id").val("<%=params[:dish_id]%>");
  };
+
  
  if (chose == "assign"){
  	

@@ -15,7 +15,7 @@ class FeastsController < ApplicationController
    
     @feast= Feast.new
     @feast.participations.build
-    @myself = User.find(session[:user_id])
+   
      respond_to do |format| 
       format.html 
       format.js 
@@ -28,7 +28,15 @@ class FeastsController < ApplicationController
       flash[:notice]="the feast has been saved. all participants will get invitations and assignments. hope they answer soon"
       
       @feast.users.to_a.each do |u|
-        FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)  
+       unless u.id == session[:user_id] 
+          FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)
+       else
+          par = u.participations.where(feast_id: @feast.id).to_a
+          par.each do |p| 
+            p.coming = "coming"
+            p.save
+          end
+        end
       end
     
       redirect_to(:action=>'list')
@@ -41,9 +49,9 @@ class FeastsController < ApplicationController
   end
 
   def edit
-    @feast=feast.find(params[:id])
-    @users=@feast.users.sort{|user1,user2| user2.manager <=> user1.manager}.sort_by{|user| user.name}    
-    @dishes=(Dish.joins(obligations: {participation: :feast}).where(feast: {id:@feast.id }).to_a + @feast.dishes).compact
+    @feast=Feast.find(params[:id])
+    @users = User.joins(participations: :feast).where(participations: {feast_id: @feast.id}).order("participations.manager DESC").order("users.name ASC").to_a
+    @dishes=@feast.dishes.to_a
   end
 
   def delete

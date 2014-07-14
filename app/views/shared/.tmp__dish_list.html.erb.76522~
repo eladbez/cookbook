@@ -1,0 +1,9 @@
+<% dishes.each do |dish| %>
+	<div class="dish">
+		<%= link_to dish do%>
+			<%= image_tag(dish.image_url.to_s, :size => '50x50')%><br />
+			<%= dish.name %>
+		<%end%>
+	</div>		
+	
+<%end%>

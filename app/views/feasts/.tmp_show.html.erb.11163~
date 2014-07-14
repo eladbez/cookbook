@@ -1,0 +1,67 @@
+<h1>let the feast begin!!</h1>
+
+
+<table>
+	<thead>
+		<tr>
+			<th><u>feast time</u></th>
+			<th><u>feast place</u></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><%=@feast.feast_time%></td>
+			<td><%=@feast.feast_place%></td>
+		</tr>
+	</tbody>
+</table>
+
+<h2>participants</h2>
+
+	
+<br />
+
+<table>
+	<thead>
+		<tr>
+			<th><u>name</u></th>
+			<th><u>kosher?</u></th>
+			<th><u>participants status</u></th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@users.each do |user|%>
+			<tr>
+				<td><%= image_tag user.image_url.to_s, :size => '50x50' %>&nbsp;<%= user.name%></td>
+				<td><%= user.kosher?%></td>
+				<td><%= user.participations.where(feast_id: @feast.id).first.coming %></td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>
+
+<br />
+<h2>dishes</h2>
+<br />
+ 
+<table>
+	<thead>
+		<tr>
+			<th><u>name</u></th>
+			<th><u>bringers</u></th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@dishes.each do |dish|%>
+			<tr>
+				<td><br /><%= image_tag dish.image_url.to_s, :size => '50x50' %>&nbsp;<%= dish.name%></td>
+				<td><% dish.participations.where(feast_id: @feast.id).to_a.each do |par|%>
+						<%=image_tag User.find(par.user_id).image_url.to_s, size: '30x30'%>&nbsp;
+						<%=User.find(par.user_id).name%>
+					<%end%></td>
+			</tr>
+		<%end%>
+	</tbody>
+</table>
+
+

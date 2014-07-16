@@ -13,5 +13,7 @@
 //= require jquery
 //= require_self
 //= require_tree .
+//= require public.js
+//= require jquery-ui.min
 //= require jquery_nested_form
 // var $j = jQuery.noConflict();

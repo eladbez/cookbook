@@ -1,0 +1,22 @@
+
+var chose
+
+$(document).ready(function(){
+	
+	var divArray = $("#par").find("input[id$=user_id]").closest("div");
+	var arrayLength = divArray.length - 1;
+	for (var i = 0; i < arrayLength; i++) {
+	    var userId = $(divArray[i]).find("input[id$=user_id]").attr("value");
+		var userName = $("#info").find("dfn[id="+userId+"]").first().data("username");
+		var userImage = $("#info").find("dfn[id="+userId+"]").first().data("userimage");
+		var userBlock = "<a href='/users/" + userId + "'><img alt='user picture' src='"+userImage.image.url+"' height='100' width='100'><br>"+userName+"</a><br />";
+		var removeBlock = "<a class='cl_both' href='#' onclick='remove_fields(this); return false;'>remove</a>";
+		$(divArray[i]).prepend(removeBlock);
+		$(divArray[i]).prepend(userBlock);		
+	};
+});
+
+/*
+chose = "userDtl";
+		var userName= .get("http://localhost:3000/feasts/edit", {user_id: userId}, null, "script");
+/*

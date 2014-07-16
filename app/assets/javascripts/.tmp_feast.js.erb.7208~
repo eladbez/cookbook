@@ -38,12 +38,10 @@ function printUser(userIdF,userNameF,imgSrcF){
 	$("#par").find("tbody").append("<tr><td>");
 	$("#par").find("td").last().append(myDiv);
 	$("#par").find("tr").last().append("<td>");
-	$("#"+aid).closest("div").data("aid",aid);
 	$(".user_block").last().droppable({drop: function(){
 		$(this).effect( "bounce" );
 		chose = "assign";
-		var aidd = $(this).data("aid"); 
-		$.get("http://localhost:3000/feasts/new", {aid: aidd, dish_id: dishId}, null, "script");
+		$.get("http://localhost:3000/feasts/new", {aid: aid, dish_id: dishId, dish_name: dishName}, null, "script");
 	}});
 	chose = "user";
 	$.get("http://localhost:3000/feasts/new", {user_id: userIdF, mng: mng}, null, "script");	
@@ -106,7 +104,7 @@ function printDish(dishIdF,dishNameF,imgSrcF){
 		
 	//this makes the dish draggable
 	
-	$(".dish_block").last().draggable({ 
+	$(".dish_block").draggable({ 
 		start: function(){
 	dishId = Number($(this).find("a").attr("href").slice(8,9));
 	
@@ -138,86 +136,22 @@ function remove_fields_dish(link){
 
 //end the add course part------------------------------------------------------------
 
-//begin :add the former information-------------------------------------
 
 $(document).ready(function(){
-		var stat = $("#info").data("action");
-		if (stat != "edit"){
-			t1= $("#par").data('myid');
-			t2= $("#par").data('myname');
-			t3= $("#par").data('myimage').image.url;
-			mng = "1";
-			printUser(t1,t2,t3);
-		};
-	
-	//assigning the users for edit	
-	
-	var divArray = $("#par").find("input[id$=user_id]").closest("div");
-	var arrayLength = divArray.length;
-	for (var i = 0; i < arrayLength; i++) {
-	    userId = $(divArray[i]).find("input[id$=user_id]").attr("value");
-		userName = $("#info").find("dfn[id="+userId+"]").first().data("username");
-		userImage = $("#info").find("dfn[id="+userId+"]").first().data("userimage");
-		var aid = new Date().getTime();
-		$(divArray[i]).data("aid",aid);
-		var userBlock = "<a href='/users/" + userId + "' id='"+aid+"'><img alt='user picture' src='"+userImage.image.url+"' height='100' width='100'><br>"+userName+"</a><br />";
-		var removeBlock = "<a class='cl_both' href='#' onclick='remove_fields(this); return false;'>remove</a>";
-		$(divArray[i]).prepend(removeBlock);
-		$(divArray[i]).prepend(userBlock);
-		$(divArray[i]).droppable({drop: function(){
-			$(this).effect( "bounce" );
-			chose = "assign";
-				var aidd = $(this).data("aid");
-				$.get("http://localhost:3000/feasts/new", {aid: aidd, dish_id: dishId, dish_name: dishName}, null, "script");
-			}});
-		
-		//assigning the dishes for the user
-		var obArray = $(divArray[i]).find("input[id*=obligations]");
-		var obLength = obArray.length;
-		for (var x = 0; x < obLength; x=x+3) {
-			dishId = $(obArray[x]).attr("value");
-			var obId = $(obArray[x]).attr("id").slice(0,-8);
-			dishName = $("#info").find("#"+dishId+"d").first().data("dishname");
-			$(obArray[x]).closest("tr").find("td").last().append("<dfn>"+dishName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$(obArray[x]).closest("tr").find("td").last().append("<img alt='cancel - x' class='x-pic' height='30' src='/assets/x-blue.png' width='30'>");
-			$(obArray[x]).closest("tr").find("img:last").hover(
-				function(){
-					$(this).attr("src","/assets/x-red.png");
-				},
-				function(){
-					$(this).attr("src","/assets/x-blue.png");
-				}
-			);
-			
-			
-			$(obArray[x]).closest("tr").find("img:last").click(function(){
-				$(this).hide();
-				$(this).prev().hide();
-				$("#par").find("input[id ="+obId+"__destroy]").val("1");
-			});
-				
-		}
-	};
-	
-	
-	//showing the dishes for edit
-	var divArray = $("#course").find("input[id$=dish_id]").closest("div");
-	var arrayLength = divArray.length;
-	for (var i = 0; i < arrayLength; i++) {
-	    dishId = $(divArray[i]).find("input[id$=dish_id]").attr("value");
-		dishName = $("#info").find("dfn[id="+dishId+"d]").first().data("dishname");
-		dishImage = $("#info").find("dfn[id="+dishId+"d]").first().data("dishimage");
-		var dishBlock = "<a href='/dishes/" + dishId + "'><img alt='dish picture' src='"+dishImage.image.url+"' height='100' width='100'><br>"+dishName+"</a><br />";
-		var removeBlock = "<a class='cl_both' href='#' onclick='remove_fields_dish(this); return false;'>remove</a>";
-		$(divArray[i]).prepend(removeBlock);
-		$(divArray[i]).prepend(dishBlock);
-	    $(divArray[i]).draggable({ 
-			start: function(){
-			dishId = Number($(this).find("a").attr("href").slice(8,9));
-		},
-		revert: true
-	  });		
-	}
-	
+		t1= $("#par").data('myid');
+		t2= $("#par").data('myname');
+		t3= $("#par").data('myimage').image.url;
+		mng = "1";
+		printUser(t1,t2,t3);
 });
-//end: add the former information-------------------------------------
+
+/*
+$(document).ready(function(){
+	$("dfn").each(function(){
+		t1 = $(this).data('userid');
+		t2 = $(this).data('username');
+		t3 = $(this).data('userimage').image.url;
+		printUser(t1,t2,t3);
+		)};
+});
+*/

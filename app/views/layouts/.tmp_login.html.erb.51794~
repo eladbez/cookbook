@@ -104,7 +104,7 @@
 <!--the end of the gallery of three rotating images.------------------------ -->
 
 
-
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 
      <% if !flash[:notice].blank? %>
@@ -113,16 +113,9 @@
         </div>
       <% end %>
     <br />
-
+<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 <div id="content">
-	   <% if !flash[:notice].blank? %>
-        <div class="notice">
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
-    <br />
-
       
         <%= yield %>
 

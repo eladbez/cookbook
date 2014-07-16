@@ -1,12 +1,12 @@
-
-<%= content_tag "div", id: "info", data: {action: "edit"} do %>
-	<% @users.each do |user| %>
-		<%= content_tag "dfn", "", id: user.id, data: {userid: user.id, username: user.name, userimage: user.image} %>
-	<% end %>
-	<% @dishes.each do |dish| %>
-		<%= content_tag "dfn", "", id: "#{dish.id}d", data: {dishid: dish.id, dishname: dish.name, dishimage: dish.image} %>
-	<% end %>	
+<% content_for :head do %>
+	 <%= javascript_include_tag('feast-edit') %>
 <% end %>
+
+<div id="info">
+<% @users.each do |user| %>
+	<%= content_tag "dfn", "", id: user.id, data: {userid: user.id, username: user.name, userimage: user.image} %>
+<% end %>
+</div>
 
 <h1><%= @feast.name %></h1>
 
@@ -39,23 +39,18 @@
 
 	<%= content_tag "div",:id => "par", data: {myid: User.find(session[:user_id]).id, myname: User.find(session[:user_id]).name, myimage: User.find(session[:user_id]).image} do%>
 		<table>
-			<thead>
 			<tr>
 				<th>participant</th>
 				<th>assignment</th>
 			</tr>
-			</thead>
-			<tbody>
-			<%= f.fields_for(:participations) do |fp|%>
+			<%=f.fields_for(:participations) do |fp|%>
 			<tr>
 				<td>
-				<div class="user_block">
+				<div>
 				<%=fp.hidden_field(:user_id)%> 
 					<%=fp.hidden_field(:manager,value: false)%>
 					<%=fp.hidden_field(:_destroy,value: false)%>
-					<% obfields = render(partial: 'obligation_fields', locals: {fp: fp})%>
-					<div data-obcontent='<%=obfields%>' ></div>
-					<%= fp.fields_for(:obligations) do |fpo| %>
+					<%=fp.fields_for(:obligations) do |fpo| %>
 						<%= fpo.hidden_field(:dish_id) %> 
 						<%= fpo.hidden_field(:_destroy,value: false) %>
 					<%end%>
@@ -65,7 +60,6 @@
 				<td><!--מקום לתצוגת מאכל --> </td>
 			</tr>
 			<% end %>
-			</tbody>
 			</table>
 		
 		
@@ -89,21 +83,10 @@
 
 	<div id ="course">
 		<table>
-			<%= f.fields_for(:courses) do |fc|%>
-			<tr>
-				<td>
-				<div class="dish_block">
-				<%=fc.hidden_field(:dish_id)%> 
-				<%=fc.hidden_field(:_destroy,value: false)%>
-				</div>
-				</td>
-				<td><!--מקום לתצוגת מאכל --> </td>
-			</tr>
-			<% end %>
 		</table>		
 	</div>	
 <br /><br />
-	 <%=submit_tag "update feast"%>
+	 <%=submit_tag "initiate feast"%>
 
 <%end%> <!-- form end -->
 

@@ -46,12 +46,24 @@ class FeastsController < ApplicationController
   end
 
   def update
+    @feast = Feast.find(params[:id])
+    if @feast.update_attributes(feast_params)
+      flash[:notice] = "feast updated."
+      redirect_to(:action => 'list')
+    else
+      # If save fails, redisplay the form so user can fix problems
+      render('edit')
+    end  
   end
 
   def edit
     @feast=Feast.find(params[:id])
     @users = User.joins(participations: :feast).where(participations: {feast_id: @feast.id}).order("participations.manager DESC").order("users.name ASC").to_a
     @dishes=@feast.dishes.to_a
+    respond_to do |format| 
+      format.html 
+      format.js 
+     end
   end
 
   def delete
@@ -59,13 +71,17 @@ class FeastsController < ApplicationController
   end
   
   def destroy
+    feast = Feast.find(params[:id])
+    feast.destroy
+    flash[:notice] = "feast canceled"
+    redirect_to(:action => 'list')
   end
 
 
 private 
 
    def feast_params
-        # params.require(:feast).permit(:id, :name, :image, :feast_place, :feast_time,courses_attributes: [:id, :dish_id, :_destroy,:feast_id],participations_attributes: [:id,:feast_id, :user_id, :_destroy,obligations_attributes: [:id, :dish_id, :_destroy, :participation_id]])
+        # params.require(:feast).permit(:id, :name, :image, :feast_place, :feast_time,courses_attributes: [:id, :dish_id, :_destroy,:feast_id],participations_attributes: [:id,:feast_id, :user_id, :_destroy,manager,obligations_attributes: [:id, :dish_id, :_destroy, :participation_id]])
         params.require(:feast).permit!
    end
      

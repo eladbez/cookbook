@@ -1,0 +1,85 @@
+<h1> my feast list </h1>
+
+<div class="feast">
+<%= link_to({:action => 'new'}) do%>
+	 <%= image_tag('feast_new.jpg', :size => '260x260', :alt => 'new dish') %>
+<%end%>
+</div>
+<hr />
+
+<h2>managed feasts</h2><br />
+<%if @user_feast_m.blank? %>
+	<p>there are no managed feasts</p>
+<%end%>
+
+<%@user_feast_m.each do |f|%>
+<div class="feast">
+	<%=link_to edit_feast_path(f.id) do%>
+		<%=feast_image(f)%>
+	<%end%>
+
+	<p><u> feast time: </u><%=f.feast_time%></p><br />
+	<p><u>feast place: </u><%=f.feast_place%></p><br /><br />
+
+</div>	
+	    
+		
+		<%= link_to('delete feast', delete_feast_path(f.id)) %>
+		
+		<br /><br /><br />
+
+<h2><u>users</u></h2>		
+		<% users=f.users %>
+
+		<%= render(:partial => 'shared/user_list', :locals => {:users => users}) %>
+
+<h2><u>dishes</u></h2>
+		
+		<%= render(:partial => 'feast_dishes', :locals => {dishes: f.dishes,feast: f})%>			
+
+<hr />
+
+<%end%>
+
+
+<br /><br /><br /><br />
+
+
+<h2>participated feast list</h2>
+	<%if @user_feast_p.blank? %>
+		<p>you are not participating in any feasts</p>
+	<%end%>
+
+
+<%@user_feast_p.each do |f|%>
+	<div class="feast">
+		<%=link_to edit_feast_path(f.id) do%>
+			<%=feast_image(f)%>
+		<%end%>
+
+		<p><u> feast time: </u><%=f.feast_time%></p><br />
+		<p><u>feast place: </u><%=f.feast_place%></p><br /><br />
+
+	</div>	
+	    
+		
+		<%= link_to('delete feast', delete_feast_path(f.id)) %> 
+		
+		<br /><br /><br />
+
+<h2><u>users</u></h2>		
+		<% users=f.users%>
+
+		<%= render(:partial => 'shared/user_list', :locals => {:users => users}) %>
+
+<h2><u>dishes</u></h2>
+		
+		<%= render(:partial => 'feast_dishes', :locals => {dishes: f.dishes,feast: f})%>			
+
+<hr />
+
+<%end%>
+
+
+<br /><br /><br /><br />
+

@@ -1,4 +1,5 @@
-
+var userName;
+var userImage;
 var dishName;
 var notFirst;
 var userId;
@@ -45,10 +46,7 @@ $("#feast_courses_attributes_" + new_id4 + "_dish_id").val("<%=params[:dish_id]%
       	if (dsply != undefined){
 			$("#par").find("a#<%=params[:aid]%>").closest("tr").append("<td>");
 		}
-		alert("<%=params[:dish_id]%>");
-		var dName = "<%= Dish.find(params[:dish_id]).name %>";
-		alert(dName);
-		$("#par").find("a#<%=params[:aid]%>").closest("tr").find("td:last").append("<dfn>"+dName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#par").find("a#<%=params[:aid]%>").closest("tr").find("td:last").append("<dfn><%=params[:dish_name]%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 		$("#par").find("a#<%=params[:aid]%>").closest("tr").find("td:last").append("<img alt='cancel - x' class='x-pic' height='30' src='/assets/x-blue.png' width='30'>");
 		$("#par").find("a#<%=params[:aid]%>").closest("tr").find("img:last").hover(
 		function(){
@@ -72,5 +70,9 @@ $("#feast_courses_attributes_" + new_id4 + "_dish_id").val("<%=params[:dish_id]%
 	
  };
 
- 
- 
+ /*
+ if (chose == "userDtl"){
+ 	userName = <%=User.find(params[:user_id]).name%>;
+	userImage = <%=User.find(params[:user_id]).image.url.to_s%>;
+ }
+*/

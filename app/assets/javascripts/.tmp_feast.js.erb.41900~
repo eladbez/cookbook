@@ -46,7 +46,7 @@ function printUser(userIdF,userNameF,imgSrcF){
 		$.get("http://localhost:3000/feasts/new", {aid: aidd, dish_id: dishId}, null, "script");
 	}});
 	chose = "user";
-	$.get("http://localhost:3000/feasts/new", {user_id: userIdF, mng: mng}, null, "script");
+	$.get("http://localhost:3000/feasts/new", {user_id: userIdF, mng: mng}, null, "script");	
 }
 		
 function add_user(butt){

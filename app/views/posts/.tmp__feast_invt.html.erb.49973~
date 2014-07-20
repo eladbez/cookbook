@@ -1,0 +1,80 @@
+<div>
+	
+	<h3>feast  invitation</h3>
+	<% tickets = User.find(session[:user_id]).participations.where(feast_id: feast.id).count - 1 %>
+	<p>
+		dear <%=User.find(fiv.receiver_id).name%><br />
+		<%=User.find(fiv.sender_id).name%> has invitad you 
+		to eat with him at <%= feast.feast_place %> at <%= feast.feast_time %><br />
+		will you join him?
+		<% if tickets > 0 do %>
+			he also wants you to bring <%=pluralize(tickets, 'friend') %> ok?
+		<% end %>  
+	</p>
+	
+	
+	<%= form_for feast, remote: true do |f| %>
+		<% # pars = User.find(session[:user_id]).participations.where(feast_id: feast.id)%>
+		<table>
+			<thead>
+				<tr>
+					<th>coming?</th>
+					<th>yes</th>
+					<th>maybe</th>
+					<th>no</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% first = true %>
+				<% f.fields_for :participations do |par| %>
+					<% if par.user_id == session[:user_id] do %>
+						<% if first do %>
+							<tr>
+								<td><%= User.find(par.user_id).name %></td>
+								<td><%= radio_button(:coming, "coming") %>yes</td>
+								<td><%= radio_button(:coming, "maybe") %>maybe</td>
+								<td><%= radio_button(:coming, "not coming") %>no</td>
+							</tr>
+						<% else %>
+							<tr>
+								<td><%= i.to_words ordinal: true %> friend </td>
+								<td><%= radio_button(:coming, "coming") %>yes</td>
+								<td><%= radio_button(:coming, "maybe") %>maybe</td>
+								<td><%= radio_button(:coming, "not coming") %>no</td>
+							</tr>
+						<% end %>
+						<% first = false %>
+					<% end %>	
+				<% end %>	
+			</tbody>
+		</table>
+		<%= submit_tag "respond" %>
+	<% end %>	 	
+</div> 
+
+
+
+<% if false %>
+			<tbody>
+				<% i=0 %>
+				<% par.each do |par| %>
+					<% if i = 0 do %>
+						<tr>
+							<td><%=User.find(par.user_id).name%></td>
+							<td><%= radio_button(:coming[i], "yes") %>yes</td>
+							<td><%= radio_button(:coming[i], "maybe") %>maybe</td>
+							<td><%= radio_button(:coming[i], "no") %>no</td>
+						</tr>
+					<% else %>
+					<tr>
+						<td><%= i.to_words ordinal: true %> friend </td>
+						<td><%= radio_button(:coming[i], "yes") %>yes</td>
+						<td><%= radio_button(:coming[i], "maybe") %>maybe</td>
+						<td><%= radio_button(:coming[i], "no") %>no</td>
+					</tr>
+					<% end %>
+					<% i = i + 1 %>
+				<% end %>	
+				<% hidden_field_tag(:i, value: i) %>	
+			</tbody>
+<% end %>

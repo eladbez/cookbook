@@ -51,6 +51,7 @@ group :development do
 end
 
 gem 'nested_form'
+gem 'numbers_and_words'
 #gem 'cocoon'
 
 

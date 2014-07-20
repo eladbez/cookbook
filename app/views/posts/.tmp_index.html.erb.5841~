@@ -1,13 +1,9 @@
 <h1>You received the following notifications</h1>
 	
 	<% @fivs.each do |fiv| %>
-		
 		<%feast = Feast.find(fiv.feast_id)%>      
-        <%= link_to :action =>'show', controller: 'feasts', :id => fiv.feast_id, :class => 'action' do %>
-		<%=feast_image(feast)%><br />
-        <% end %>
-		<p>feast time: <%= feast.feast_time %></p>
-		<p>feast place:<%=feast.feast_place%></p><br /><br />
+        <%= image_tag(feast.image_url.to_s, :size => '300x300'), {:action =>'show',:id => fiv.feast_id}, :class => 'action' %><br />
+        <p>feast time: <%=feast.feast_time%> and place :<%=feast.feast_place%></p>
 		<%= render(partial: 'feast_invt', locals: {feast: feast,fiv: fiv})%>
 	<% end %>
 	
@@ -17,7 +13,7 @@
 			
 			 <% @posts.each do |post| %>
 		<%feast = Feast.find(post.feast_id)%>      
-        <%= image_tag(feast.image_url.to_s, :size => '300x300')%><br />
+        <%= image_tag(feast.image_url.to_s, :size => '300x300'), {:action =>'show',:id => post.feast_id}, :class => 'action' %><br />
         <p>feast time: <%=feast.feast_time%> and place :<%=feast.feast_place%></p>
 		<p><u>manager messege</u></p><br /> 
 		<%= feast.content %><br />

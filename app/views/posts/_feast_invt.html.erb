@@ -1,0 +1,56 @@
+<div id="feast<%=feast.id%>" >
+	
+	<h3>feast  invitation</h3><br />
+	<% tickets = User.find(session[:user_id]).participations.where(feast_id: feast.id).count - 1 %>
+	<p>
+		dear <%=User.find(fiv.receiver_id).name%><br />
+		<%=User.find(fiv.sender_id).name%> has invitad you 
+		to eat with him at <%= feast.feast_place %> at <%= feast.feast_time %><br />
+		will you join him?
+		<% if tickets > 0 %>
+			he also wants you to bring <%=pluralize(tickets, 'friend') %> ok?
+		<% end %>  
+	</p>
+	
+	<%= form_for feast, remote: true do |f| %>
+		<% # pars = User.find(session[:user_id]).participations.where(feast_id: feast.id)%>
+		<table>
+			<thead>
+				<tr>
+					<th>coming?</th>
+					
+				</tr>
+			</thead><br />
+			<tbody>
+				<tr></tr>
+				<% i = 0 %>
+				
+				<%= f.fields_for(:participations) do |par| %>
+					
+					<% if par.object.user_id == session[:user_id] %>
+						<% if i == 0 %>
+							<tr>
+								<td><%= User.find(par.object.user_id).name %></td>
+								<td><%= par.radio_button(:coming, "coming") %>yes</td>
+								<td><%= par.radio_button(:coming, "maybe") %>maybe</td>
+								<td><%= par.radio_button(:coming, "not coming") %>no</td>
+							</tr>
+						<% else %>
+							<tr>
+								<td><%= i.to_words ordinal: true %> friend </td>
+								<td><%= par.radio_button(:coming, "coming") %>yes</td>
+								<td><%= par.radio_button(:coming, "maybe") %>maybe</td>
+								<td><%= par.radio_button(:coming, "not coming") %>no</td>
+							</tr>
+						<% end %>
+						<% i = i + 1 %>
+					<% end %>	
+				<% end %>	
+			</tbody>
+		</table>
+		<%= hidden_field_tag(:pars, "invt") %>
+		<%= submit_tag "respond" %>
+	<% end %>	 	
+</div> 
+
+

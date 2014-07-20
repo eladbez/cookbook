@@ -11,13 +11,14 @@ class Feast < ActiveRecord::Base
   
   has_many :groceries, :as => :needed  
   
-  has_many :feast_invt
+  has_many :feast_invt, dependent: :destroy
   
   accepts_nested_attributes_for :participations,
   :allow_destroy => true
   
   accepts_nested_attributes_for :courses,
   :allow_destroy => true
+  
   
   validates_presence_of :feast_time
   validates_presence_of :feast_place

@@ -10,7 +10,7 @@ class Dish < ActiveRecord::Base
   
   has_many :groceries, :as => :needed 
   
-  has_many :obligations
+  has_many :obligations, dependent: :destroy
   has_many :participations, :through => :obligations 
   
 #  validates :name, presence: true

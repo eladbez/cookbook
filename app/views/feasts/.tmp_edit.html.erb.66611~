@@ -1,0 +1,112 @@
+
+<%= content_tag "div", id: "info", data: {action: "edit"} do %>
+	<% @users.each do |user| %>
+		<%= content_tag "dfn", "", id: user.id, data: {userid: user.id, username: user.name, userimage: user.image} %>
+	<% end %>
+	<% @dishes.each do |dish| %>
+		<%= content_tag "dfn", "", id: "#{dish.id}d", data: {dishid: dish.id, dishname: dish.name, dishimage: dish.image} %>
+	<% end %>	
+<% end %>
+
+<h1><%= @feast.name %></h1>
+
+<%=error_messages_for(@feast)%>
+
+<%= form_for @feast, :multipart => true do |f|%>
+
+<%= f.label("feast name", :name)%><br /><br />
+		<%= f.text_field(:name) %> <br /><br />
+		<%= f.label("feast time", :feast_time)%><br /><br />
+		<%= f.datetime_select(:feast_time, :order => [:day, :month ,:year]) %><br /><br />
+		<%= f.label("feast place", :feast_place)%><br /><br />
+		<%= f.text_field(:feast_place) %> <br /><br />
+		upload image file <br /><br />
+		<%= f.file_field :image %> <br /><br />
+		
+		
+<h2>participants
+	<% @fields = render(partial: 'participation_fields', locals: {f: f})%>
+	
+	<u>
+		 <%= link_to '#', :onclick => "add_par(); return false;",class: "right",id: "try", 
+             data: {content: "#{@fields}"} do %>
+		 <%= image_tag('add_participants.png', :size => '100x100', :alt => 'Photo Gallery') %>
+		 <%end%>
+    </u>
+</h2>	
+
+<br /><br /><br />	 
+
+	<%= content_tag "div",:id => "par", data: {myid: User.find(session[:user_id]).id, myname: User.find(session[:user_id]).name, myimage: User.find(session[:user_id]).image} do%>
+		<table>
+			<thead>
+			<tr>
+				<th>participant</th>
+				<th>assignment</th>
+			</tr>
+			</thead>
+			<tbody>
+			<%= f.fields_for(:participations) do |fp|%>
+			<tr>
+				<td>
+				<div class="user_block">
+				<%=fp.hidden_field(:user_id)%> 
+					<%=fp.hidden_field(:manager,value: false)%>
+					<%=fp.hidden_field(:_destroy,value: false)%>
+					<% obfields = render(partial: 'obligation_fields', locals: {fp: fp})%>
+					<div data-obcontent='<%=obfields%>' ></div>
+					<%= fp.fields_for(:obligations) do |fpo| %>
+						<%= fpo.hidden_field(:dish_id) %> 
+						<%= fpo.hidden_field(:_destroy,value: false) %>
+					<%end%>
+				</div>
+				</td>
+				
+				<td><!--מקום לתצוגת מאכל --> </td>
+			</tr>
+			<% end %>
+			</tbody>
+			</table>
+		
+		
+		
+		
+	<% end %>		
+
+<br /><br /><br /><br /><br /><br />
+
+<h2>dishes
+	<% @fields2 = render(partial: 'course_fields', locals: {f: f})%>
+	<u>
+		 <%= link_to '#', :onclick => "add_course(); return false;",class: "right",id: "add_course", 
+             data: {content: "#{@fields2}"} do %>
+		 <%= image_tag('add_dish.png', :size => '100x100', :alt => 'Photo Gallery') %>
+		 <%end%>
+    </u>
+</h2>	
+
+<br /><br /><br />	 
+
+	<div id ="course">
+		<table>
+			<%= f.fields_for(:courses) do |fc|%>
+			<tr>
+				<td>
+				<div class="dish_block">
+				<%=fc.hidden_field(:dish_id)%> 
+				<%=fc.hidden_field(:_destroy,value: false)%>
+				</div>
+				</td>
+				<td><!--מקום לתצוגת מאכל --> </td>
+			</tr>
+			<% end %>
+		</table>		
+	</div>	
+<br /><br />
+	 <%=submit_tag "update feast"%>
+
+<%end%> <!-- form end -->
+
+
+
+

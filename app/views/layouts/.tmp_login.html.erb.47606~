@@ -106,11 +106,16 @@
 
 
 
+
+     <% if !flash[:notice].blank? %>
+        <div class="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
     <br />
 
 
 <div id="content">
-	   <br />
 	   <% if !flash[:notice].blank? %>
         <div class="notice">
           <%= flash[:notice] %>

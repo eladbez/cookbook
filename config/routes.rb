@@ -29,6 +29,9 @@ FirstProject::Application.routes.draw do
   #   resources :products
 
  resources :dishes do 
+    member do
+      get :delete
+    end
     
     collection do
       get :sort_form

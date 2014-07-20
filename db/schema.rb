@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708130623) do
+ActiveRecord::Schema.define(version: 20140717080550) do
 
   create_table "belongings", force: true do |t|
     t.integer  "user_id"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140708130623) do
     t.integer "sender_id"
     t.integer "receiver_id"
     t.integer "feast_id"
-    t.boolean "meneger?"
+    t.boolean "manager",     default: false
   end
 
   create_table "feasts", force: true do |t|
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(version: 20140708130623) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "posts", ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id", using: :btree
 
   create_table "replies", force: true do |t|
     t.text     "content"

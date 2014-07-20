@@ -6,7 +6,6 @@
 			<%= u.name %>
 		<%end%>
 		<br /><br />
-		<small><u>coming?</u>&nbsp;<%= u.participations.where(feast_id: feast.id).first.coming %></small><br />
 		<small><u>city:</u>&nbsp;<%= u.city %></small><br />
 		<small><u>kitchen:</u>&nbsp;<%= u.kosher %></small>
 	</div>		

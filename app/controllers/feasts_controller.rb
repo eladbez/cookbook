@@ -1,8 +1,8 @@
 class FeastsController < ApplicationController
 
   def list
-    @user_feast_m=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id]}).where(participations: {manager: true}).to_a
-    @user_feast_p=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id]}).where(participations: {manager: false}).to_a
+    @user_feast_m=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id],manager: true}).to_a
+    @user_feast_p=Feast.joins(participations: :user).where(participations: {user_id: session[:user_id],manager: false}).to_a
   end
 
   def show
@@ -12,12 +12,10 @@ class FeastsController < ApplicationController
   end
 
   def new
-   
-    @feast= Feast.new
-    @feast.participations.build
-   
      respond_to do |format| 
-      format.html 
+      format.html {@feast = Feast.new
+                   @feast.participations.build
+                   }
       format.js 
      end
   end
@@ -27,7 +25,8 @@ class FeastsController < ApplicationController
    if @feast.save
       flash[:notice]="the feast has been saved. all participants will get invitations and assignments. hope they answer soon"
       
-      @feast.users.to_a.each do |u|
+      # creates new participants invitations
+      @feast.users.distinct.to_a.each do |u|
        unless u.id == session[:user_id] 
           FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)
        else
@@ -48,20 +47,43 @@ class FeastsController < ApplicationController
   def update
     @feast = Feast.find(params[:id])
     if @feast.update_attributes(feast_params)
-      flash[:notice] = "feast updated."
-      redirect_to(:action => 'list')
+      unless params[:pars]
+        flash[:notice] = "feast updated."
+      # creates new participants invitations
+        @feast.users.distinct.to_a.each do |u|
+            unless u.id == session[:user_id] 
+                FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)
+            end
+         end
+        else
+          flash[:notice] = "sender is noted"
+        end
+       
+      respond_to do |format| 
+        format.html {redirect_to(:action => 'list')}
+        format.js 
+        # attention!!!! normal edit view template uses ajax
+        # through new controller thus new.js NOT edit.js
+        # only post feast invitations answers submittion uses update.js
+       end
     else
-      # If save fails, redisplay the form so user can fix problems
-      render('edit')
+      # if save fails it will render edit or js
+      unless params[:pars] 
+        render('edit')
+      else
+        render(controller: 'posts', action: 'index')
+      end
     end  
   end
 
   def edit
-    @feast=Feast.find(params[:id])
-    @users = User.joins(participations: :feast).where(participations: {feast_id: @feast.id}).order("participations.manager DESC").order("users.name ASC").to_a
-    @dishes=@feast.dishes.to_a
     respond_to do |format| 
-      format.html 
+      format.html{ 
+        @edit = true
+        @feast = Feast.find(params[:id])
+        @users = User.joins(participations: :feast).where(participations: {feast_id: @feast.id}).order("participations.manager DESC").order("users.name ASC").to_a
+        @dishes = @feast.dishes.to_a
+        }
       format.js 
      end
   end
@@ -86,3 +108,6 @@ private
    end
      
 end
+
+
+          

@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Feast_invt.where(receiver_id: session[:user_id])
+    @fivs = FeastInvt.where(receiver_id: session[:user_id]).where.not(sender_id: session[:user_id]).to_a
   end
 
   # GET /posts/1

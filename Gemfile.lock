@@ -69,6 +69,9 @@ GEM
     mysql (2.9.1)
     mysql (2.9.1-x86-mingw32)
     nested_form (0.3.2)
+    numbers_and_words (0.10.0)
+      activesupport
+      i18n
     polyglot (0.3.5)
     rack (1.5.2)
     rack-contrib (1.1.0)
@@ -135,6 +138,7 @@ DEPENDENCIES
   mini_magick
   mysql (= 2.9.1)
   nested_form
+  numbers_and_words
   rails (= 4.0.2)
   sass-rails (~> 4.0.0)
   sdoc

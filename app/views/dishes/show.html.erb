@@ -10,11 +10,11 @@
 <%end%>
 
 <%if @dish.user_id.blank? || @dish.user_id==session[:user_id] %>
-	<%=link_to("edit recipe",{:action =>'edit',:id=>@dish.id})%>
+	<%=link_to("edit recipe", edit_dish_path(@dish.id)) %>
 <%end%>
 			
 <%if @dish.user_id==session[:user_id]%>				
-	<%=link_to("delete recipe",{:action =>'delete', :id=>@dish.id})%>
+	<%=link_to("delete", delete_dish_path(@dish.id))%>
 <%end%>
 
 <%if false%>
@@ -39,6 +39,7 @@
 
 <h2>cooking instructions</h2>
 <p><%=@dish.recipe%></p>
+<br /><br />
 
 <h2>is it healthy?</h2>
 <p><%=@dish.health_value%></p>

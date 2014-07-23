@@ -5,7 +5,28 @@
 	<p>
 		dear <%=User.find(fiv.receiver_id).name%><br />
 		<%=User.find(fiv.sender_id).name%> has invitad you 
-		to eat with him at <%= feast.feast_place %> at <%= feast.feast_time %><br />
+		to eat with him <br />
+		at <%= feast.feast_place %><br />
+		at <%= feast.feast_time %><br />
+		he wants you to bring 
+		<% pars = Participation.joins(:feast, :user).where(feasts: {id: feast.id}, users: {id: fiv.receiver_id}).to_a %>
+		<% i=0 %>
+		<% pars.each do |par| %>
+			<% if i= 0 %>
+		  		<% par.obligations.to_a.each do |ob| %>
+					<%= link_to Dish.find(ob.dish_id).name, dish_path(ob.dish_id) %>, 			
+				<% end %>
+			<% else %>
+			<p>your friends have to bring:</p>
+			<%= i.to_words ordinal: true %> friend
+				<% par.obligations.to_a.each do |ob| %>
+					<%= link_to Dish.find(ob.dish_id).name, dish_path(ob.dish_id) %>, 			
+				<% end %> 
+			<% end %>
+			<% i= i+1 %>
+		<% end %>
+		
+		
 		will you join him?
 		<% if tickets > 0 %>
 			he also wants you to bring <%=pluralize(tickets, 'friend') %> ok?
@@ -48,9 +69,10 @@
 				<% end %>	
 			</tbody>
 		</table>
-		<%= hidden_field_tag(:pars, "invt") %>
+		<%= hidden_field_tag(:invtupdate, "invt") %>
+		<%= hidden_field_tag(:fiv_id, fiv.id) %>
 		<%= submit_tag "respond" %>
 	<% end %>	 	
 </div> 
 
-
+<br /><br />

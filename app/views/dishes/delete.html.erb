@@ -1,5 +1,6 @@
 <h2>delete recipe <%=@dish.name%>?</h2>
 <br /><br /><br />
-<%= button_to "delete recipe", http://dish/destroy/#{@dish.id} %><br />
+
+<%= button_to "delete recipe", {action: 'destroy',id: @dish.id}, method: :delete %><br />
 
 

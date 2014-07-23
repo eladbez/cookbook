@@ -9,8 +9,6 @@ class Feast < ActiveRecord::Base
   has_many :courses, dependent: :destroy
   has_many :dishes, :through => :courses
   
-  has_many :groceries, :as => :needed  
-  
   has_many :feast_invt, dependent: :destroy
   
   accepts_nested_attributes_for :participations,

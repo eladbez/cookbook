@@ -50,7 +50,7 @@ group :development do
   gem 'meta_request'
 end
 
-gem 'nested_form'
+#gem 'nested_form'
 gem 'numbers_and_words'
 #gem 'cocoon'
 

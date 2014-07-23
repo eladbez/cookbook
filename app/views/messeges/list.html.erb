@@ -1,2 +1,5 @@
-<h1>Messeges#list</h1>
-<p>Find me in app/views/messeges/list.html.erb</p>
+<h1>inbox messeges</h1>
+<% @fivs.each do |fiv| %>
+		<% feast = Feast.find(fiv.feast_id) %>      
+		<%= render(partial: 'shared/feast_invt', locals: {feast: feast,fiv: fiv})%>
+<% end %>

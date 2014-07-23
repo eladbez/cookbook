@@ -1,3 +1,6 @@
+<% content_for :head do %>
+   <%= javascript_include_tag('feast')%>
+<% end %>
 
 <%= content_tag "div", id: "info", data: {action: "edit"} do %>
 	<% @users.each do |user| %>

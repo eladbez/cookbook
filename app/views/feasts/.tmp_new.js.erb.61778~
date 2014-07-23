@@ -1,8 +1,0 @@
-alert("hello from print <%=params[:user_id]%> ");
-	var new_id1 = new Date().getTime();
-	var new_id2 = new Date().getTime() + 1;
-	var regexp1 = new RegExp("feast_participations_user_id", "g");
-	var regexp2 = new RegExp("new_par", "g");
-$("#par").children(".user_block").last().append($("#try").data('content').replace(regexp1, new_id1).replace(regexp2, new_id2));
-$("#" + new_id1).val("<%=params[:user_id]%>");
- 

@@ -1,7 +1,7 @@
 class Grocery < ActiveRecord::Base
-  belongs_to :needed, :polymorphic => true
-
+  
+  belongs_to :dish
   validates :quantity, numericality: true
-  validates :name, presence: true
+  
   
 end

@@ -1,10 +1,18 @@
+<% content_for :head do %>
+   <%= javascript_include_tag('menual_nesting')%>
+<% end %>
+
+<%=error_messages_for(@dish)%>
+
 <h2>change recipe</h2>
-<%= form_for(:dish,:url => {:action =>'update', :id => @dish.id}) do |f| %>
 
-	<%= render(:partial => "form", :locals => {:f => f}%>
+<div>
+<%= form_for @dish do |f| %>
 
-<%= submit_tag("update recipe")%>
+	<%= render(:partial => "form", :locals => {stat: @stat, :f => f})%>
+
+<%= submit_tag("update recipe") %>
 
 <%end%>
-
+</div>
 

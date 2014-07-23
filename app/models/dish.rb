@@ -8,11 +8,13 @@ class Dish < ActiveRecord::Base
   has_many :courses, dependent: :destroy
   has_many :feasts, :through => :course
   
-  has_many :groceries, :as => :needed 
+  has_many :groceries, dependent: :destroy 
   
   has_many :obligations, dependent: :destroy
   has_many :participations, :through => :obligations 
   
+  accepts_nested_attributes_for :groceries, :reject_if => :all_blank,
+  :allow_destroy => true
 #  validates :name, presence: true
 #  validates :taste, presence: true
 #  validates :recipe, presence: true

@@ -47,18 +47,22 @@ class FeastsController < ApplicationController
   def update
     @feast = Feast.find(params[:id])
     if @feast.update_attributes(feast_params)
-      unless params[:pars]
+      unless params[:invtupdate]
         flash[:notice] = "feast updated."
       # creates new participants invitations
+        
         @feast.users.distinct.to_a.each do |u|
-            unless u.id == session[:user_id] 
-                FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)
-            end
-         end
-        else
-          flash[:notice] = "sender is noted"
-        end
-       
+            unless u.id == session[:user_id]
+              pars = u.participations.where(feast_id: @feast.id).to_a
+              if one_unpersisted?(pars)
+                 FeastInvt.create(receiver_id: u.id, sender_id: session[:user_id],feast_id: @feast.id)
+              end
+            end        
+          end
+       else
+         FeastInvt.find(params[:fiv_id]).update_attributes(answered: true)  
+       end
+      
       respond_to do |format| 
         format.html {redirect_to(:action => 'list')}
         format.js 
@@ -103,8 +107,7 @@ class FeastsController < ApplicationController
 private 
 
    def feast_params
-        # params.require(:feast).permit(:id, :name, :image, :feast_place, :feast_time,courses_attributes: [:id, :dish_id, :_destroy,:feast_id],participations_attributes: [:id,:feast_id, :user_id, :_destroy,manager,obligations_attributes: [:id, :dish_id, :_destroy, :participation_id]])
-        params.require(:feast).permit!
+         params.require(:feast).permit(:id, :name, :image, :feast_place, :feast_time,courses_attributes: [:id, :dish_id, :_destroy,:feast_id],participations_attributes: [:id,:feast_id, :user_id, :_destroy,:manager,:coming,obligations_attributes: [:id, :dish_id, :_destroy, :participation_id,:agreed]])
    end
      
 end

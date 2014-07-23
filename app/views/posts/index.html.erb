@@ -8,7 +8,7 @@
         <% end %>
 		<p>feast time: <%= feast.feast_time %></p>
 		<p>feast place:<%=feast.feast_place%></p><br /><br />
-		<%= render(partial: 'feast_invt', locals: {feast: feast,fiv: fiv})%>
+		<%= render(partial: 'shared/feast_invt', locals: {feast: feast,fiv: fiv})%>
 	<% end %>
 	
     

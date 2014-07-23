@@ -1,6 +1,6 @@
 
 	<tr data-rmv="a">
-		<td><%= f.select(:quantity,0..200, :include_blank => true) %></td>
+		<td><%= f.select(:quantity,0..200) %></td>
 		<td><%= f.text_field(:measure) %></td>
 		<td><%= f.text_field(:name) %></td>
 			

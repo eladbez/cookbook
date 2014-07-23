@@ -4,28 +4,4 @@
 	<h1><u>The dish you ordered, sir? </u></h1>
 		<br />
 		
-		<table summery="dish lists">
-		<tr>	
-			<th><u>name</u></th>
-			<th><u>looks</u> </th>
-			<th><u>taste</u></th>	
-			<th><u>culture</u></th>
-			<th><u>mealpart</u></th>
-			<th>&nbsp;</th>
-		</tr>
-<% @results.each do |dish| %>
-	<tr>
-		<td><%= link_to(dish.name, {:action =>'show',:id => dish.id}, :class => 'action')%></td>
-		<td><%= link_to(image_tag(dish.image_url.to_s, :size => '50x50'), {:action =>'show',:id => dish.id}, :class => 'action')%></td>
-		<td><%= dish.taste %></td>
-		<td><%= dish.culture %></td>
-		<td><%= dish.mealpart %></td>
-		<%if user_id=session[:user_id]%>				
-			<td><%=link_to("delete recipe",{:action =>'delete',:id=>dish.id}, :class => 'action')%></td>
-		<%end%>
-			
-	</tr>
-	<br />
-	<hd />
-<%end%>
-</table>
+	<%= render(partial: 'dishes_list', locals: {dishes: @results}) %>

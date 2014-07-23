@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717080550) do
+ActiveRecord::Schema.define(version: 20140721083220) do
 
   create_table "belongings", force: true do |t|
     t.integer  "user_id"
@@ -51,10 +51,13 @@ ActiveRecord::Schema.define(version: 20140717080550) do
   add_index "dishes", ["user_id"], name: "index_dishes_on_user_id", using: :btree
 
   create_table "feast_invts", force: true do |t|
-    t.integer "sender_id"
-    t.integer "receiver_id"
-    t.integer "feast_id"
-    t.boolean "manager",     default: false
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.integer  "feast_id"
+    t.boolean  "manager",     default: false
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.boolean  "answered",    default: false
   end
 
   create_table "feasts", force: true do |t|

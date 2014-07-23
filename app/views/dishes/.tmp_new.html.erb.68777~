@@ -1,3 +1,17 @@
+<% content_for :head do %>
+   <%= javascript_include_tag('menual_nesting')%>
+<% end %>
+
+<%=error_messages_for(@dish)%>
+
+<hr />
+<%= link_to("<<back to recipe search",:action=>'sort_form') %>
+<h2>add your recipe</h2>
+
+
+
+<div class="new dish">	
+<%= form_for(@dish, :multipart => true) do |f| %>
 	
 <% if session[:user_id] %>
 	<%= f.hidden_field :user_id,:value => session[:user_id] %>
@@ -38,17 +52,12 @@
 		</tr>
 	</thead>
 	<tbody data-target="a">
-
-<% if stat="edit" %> 
-	<%= f.fields_for :groceries do |fg|%> 
-		<%= render partial: 'grocery_fields', locals: {f: fg} %>
-	<% end %>
-<% end %>
-
+		
+		
 	</tbody>
 </table>	<br />
-<%= add_fields 'add ingredient', f, :groceries %>
 
+<%= add_fields 'add ingredient', f, :groceries %>
 <br /><br />
 
 <%=f.label(:recipe)%><br />
@@ -58,4 +67,19 @@
 <%=f.label(:health_value)%><br />
 <%= f.text_area :health_value, size: "40x10"%>
 <br /><br />
+
+<div class="submit buttons">
+ <%= f.submit("Catalog recipe") %>
+</div>
+
+<% end %>
+
+</div>
+
+
+
+
+
+
+
 

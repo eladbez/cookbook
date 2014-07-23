@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     	<title>the amazing COOK BOOK <%= "| #{@username}" if @username %></title>
    	 <meta name="author" content="elad bezalel">
-  	 <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+  	 
 	 <%= stylesheet_link_tag('login') %>
 	 <%= javascript_include_tag('application')%>
 	 <%= yield :head %>
@@ -38,7 +38,7 @@
 <%end%>
 <br /><br />
 
-<%=link_to :controller => 'dishes', :action => 'list', :id =>session[:user_id] do%>
+<%=link_to :controller => 'dishes' do%>
 	<p><u>my recipes</u></p>
 <%end%>
 <br /><br />
@@ -104,18 +104,20 @@
 <!--the end of the gallery of three rotating images.------------------------ -->
 
 
-<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 
-     <% if !flash[:notice].blank? %>
+    <br />
+
+
+<div id="content">
+	   <br />
+	   <% if !flash[:notice].blank? %>
         <div class="notice">
           <%= flash[:notice] %>
         </div>
       <% end %>
     <br />
-<!-- needs placing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-<div id="content">
       
         <%= yield %>
 

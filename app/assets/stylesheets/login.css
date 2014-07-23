@@ -241,7 +241,13 @@ footer {
 .no-dsp{
 	display:none;
 }
-
+.small-table{
+	width:70%;
+	margin-top:20px;
+}
+.small-table th{
+	text-decoration:none;
+}
 
 /* some jquery UI classes -------------------------------------- */
 /*

@@ -1,24 +1,25 @@
 class MessegesController < ApplicationController
   
   def new
-    @messege = Messege.build
+    
   end
 
   def create
-    @messege = @messege.build(messege_params)
+    @messege = @messege.new(messege_params)
     if @messege.save
-      flash[:notice]="messege sent to #{find(User.(@messege.receiver_id).name}"
+      flash[:notice]="messege sent to #{User.find(@messege.receiver_id).name}"
       redirect_to(:controller => 'user', :action =>'show', :id => @messege.receiver.id)
     else
       render('new')
+    end
   end
-
+  
   def list
-    @user= User.find(session[:user_id])
-    @messeges=@user.messeges.order("updated_at DESC").order("news? DESC")
-    @news=@messeges.where(news?='true').order("updated_at DESC")
-    @friend_invt = FriendInvt.where("receiver_id => session[:user_id]".order("updated_at"))
-    @feast_invt = FeastInvt.where("receiver_id => session[:user_id]".order("updated_at"))
+   # @user= User.find(session[:user_id])
+   # @messeges=@user.messeges.order("updated_at DESC").order("news? DESC")
+   # @news=@messeges.where(news?='true').order("updated_at DESC")
+   # @friend_invt = FriendInvt.where("receiver_id => session[:user_id]".order("updated_at"))
+    @fivs = FeastInvt.where(receiver_id: session[:user_id]).where.not(sender_id: session[:user_id]).order("updated_at DESC").to_a
   end
   
 
@@ -31,7 +32,7 @@ class MessegesController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    Messege.find(params[:id]).destroy
     flash[:notice] = "messege deleted."
     redirect_to(:action => 'list')
   end
@@ -40,7 +41,7 @@ private
  
   def messege_params
     params.fetch(:dish, {}).permit(:content, :subject, :receiver_id, :sender_id, :news?)    
-
+  end
 
 end
 

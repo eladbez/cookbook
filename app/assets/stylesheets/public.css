@@ -102,7 +102,7 @@ h6 { font-size: 100%; }
 
 table {
 	width: 100%;
-	height: 200px;
+	
 }
 
 th{
@@ -151,17 +151,28 @@ footer {
 .photoShow div.current {
     z-index: 2;
 }
+.small-table{
+	width:70%;
+}
+.small-table th{
+	text-decoration:none;
+}
+.right{
+	float:right;
+}
+.left{
+	float:left;
+}
 
 #photoShow1{
 	margin-left:40px;
 }
 #content h2{
 	margin:50px;
-	margin-top:250px;
 }
 
 #content table{
-	margin:40px;
+	margin:20px;
 	
 	
 }

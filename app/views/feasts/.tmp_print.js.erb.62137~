@@ -1,4 +1,0 @@
-alert("hello from print ");
-fe = $
-$("#par").html(<%= escape_javascript(render(partial: 'participations_fields', locals: {f: fe}))%>);
-

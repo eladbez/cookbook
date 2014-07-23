@@ -2,9 +2,8 @@ class DishesController < ApplicationController
   
  
   
-  def index
-    session[:user_id] = nil    
-    redirect_to('sort_form')
+  def index #only my recipes
+    @dishes = User.find(session[:user_id]).dishes.to_a
   end
   
   def sort_form
@@ -16,13 +15,13 @@ class DishesController < ApplicationController
   
   
   def show
-    @dish=Dish.find(params[:id])
-    @feast=find(params[:feast_id]) if params[:feast_id]
+    @dish = Dish.find(params[:id])
+    @feast = find(params[:feast_id]) if params[:feast_id]
   end
 
   def new
-    @dish=Dish.new
-    
+    @stat="new"
+     @dish=Dish.new
   end
 
   def create
@@ -46,19 +45,26 @@ class DishesController < ApplicationController
   end
 
   def edit
+    @stat="edit"
     @dish=Dish.find(params[:id])
   end
 
   
    def delete
     @dish = Dish.find(params[:id])
+    session[:state] = params[:state]
    end
   
   def destroy
     dish = Dish.find(params[:id])
     dish.destroy
     flash[:notice] = "this recipe is no more!"
-    redirect_to(:action => 'sort_form')
+    if session[:state] = 'private'
+      session[:state] = nil
+      redirect_to(action: 'list')
+    else
+      redirect_to(:action => 'sort_form')
+    end
   end
   
   def search_form
@@ -74,7 +80,7 @@ class DishesController < ApplicationController
    private
     
      def dish_params
-         params.fetch(:dish, {}).permit(:name, :culture, :id, :grocery, :mealpart, :recipe, :taste, :health_value, :img_source, :user_id, :feast_id, :created_at ,:image)
+         params.require(:dish).permit(:shared,:user_id,:name, :culture, :id, :grocery, :mealpart, :recipe, :taste, :health_value, :img_source, :user_id, :feast_id, :created_at ,:image,groceries_attributes: [:id,:quantity,:measure,:name,:feast_id,:dish_id,:_destroy])
      end
    
      def dish_params1

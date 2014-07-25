@@ -10,7 +10,11 @@ class DishesController < ApplicationController
   end
  
   def list
-    @results=search
+    unless params[:state]
+      @results=search
+    else
+      @results=Dish.where(shared: true)
+    end
   end
   
   
@@ -21,14 +25,21 @@ class DishesController < ApplicationController
 
   def new
     @stat="new"
-     @dish=Dish.new
+    @dish=Dish.new
   end
 
   def create
     @dish = Dish.new(dish_params)
+    if session[:user_id]
+      @dish.belongings.build(user_id: session[:user_id])
+    end
    if @dish.save
       flash[:notice]="your dish is catalogged"
-      redirect_to(:action=>'sort_form')
+      unless session[:user_id]
+        redirect_to(:action => 'sort_form')
+      else
+        redirect_to(:action => 'index')
+      end
     else
       render('new')
     end
@@ -38,7 +49,11 @@ class DishesController < ApplicationController
     @dish = Dish.find(params[:id])
     if @dish.update_attributes(dish_params)
       flash[:notice]="dish updated"
-      redirect_to(:action=>'show', :id=>@dish.id)
+      unless session[:user_id]
+        redirect_to(:action => 'sort_form')
+      else
+        redirect_to(:action => 'index')
+      end
     else
       render('edit')
     end
@@ -59,11 +74,10 @@ class DishesController < ApplicationController
     dish = Dish.find(params[:id])
     dish.destroy
     flash[:notice] = "this recipe is no more!"
-    if session[:state] = 'private'
-      session[:state] = nil
-      redirect_to(action: 'list')
-    else
+    unless session[:user_id]
       redirect_to(:action => 'sort_form')
+    else
+      redirect_to(:action => 'index')
     end
   end
   
@@ -80,7 +94,7 @@ class DishesController < ApplicationController
    private
     
      def dish_params
-         params.require(:dish).permit(:shared,:user_id,:name, :culture, :id, :grocery, :mealpart, :recipe, :taste, :health_value, :img_source, :user_id, :feast_id, :created_at ,:image,groceries_attributes: [:id,:quantity,:measure,:name,:feast_id,:dish_id,:_destroy])
+         params.require(:dish).permit(:shared,:user_id,:name, :culture, :id, :mealpart, :recipe, :taste, :health_value, :img_source, :user_id, :feast_id, :created_at ,:image,groceries_attributes: [:id,:quantity,:measure,:name,:feast_id,:dish_id,:_destroy],belongings_attributes: [:id,:user_id,:dish_id])
      end
    
      def dish_params1
@@ -108,6 +122,8 @@ class DishesController < ApplicationController
       
       unless id_s.blank?
         dish_s=dish_s.where(:user_id => id_s)
+      else 
+        dish_s=dish_s.where(:shared => true)
       end
       
    if false

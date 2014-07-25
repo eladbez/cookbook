@@ -1,9 +1,0 @@
-
-	<tr data-rmv="a">
-		<td><%= f.select(:quantity,0..200) %></td>
-		<td><%= f.text_field(:measure) %></td>
-		<td><%= f.text_field(:name) %></td>
-			
-		<td><%= f.hidden_field :_destroy %>
-			<%= link_to "remove", '#', class: "remove_fields" %></td>
-	</tr>

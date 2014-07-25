@@ -1,9 +1,9 @@
        	<nav id="top-menu">
    			<ul class="menu">
    				 <%= link_to(raw("<li> login </li>"),{:controller => 'access', :action => 'login'})%>
-				 <%= link_to(raw("<li>show all recipes</li>"),{:controller => 'dishes', :action=>'list'})%>
+				 <%= link_to(raw("<li>show all recipes</li>"),list_dishes_path,state: "all")%>
        			 <%= link_to(raw("<li>add recipe</li>"),{:controller => 'dishes', :action=>'new'})%>
        			 <%= link_to(raw("<li>search for a recipe</li>"),{:controller => 'dishes', :action=>'sort_form'})%>
-        	     <a href=""><li>good restaurants </li></a>
+        	     <a href="#"><li>good restaurants </li></a>
     		</ul>
 		</nav>

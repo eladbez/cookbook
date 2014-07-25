@@ -38,6 +38,7 @@ FirstProject::Application.routes.draw do
       get :search_form
       post :results
       post :list
+      get :list
     end
   end
   

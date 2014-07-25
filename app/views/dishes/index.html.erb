@@ -1,3 +1,4 @@
-<h1>my recipes</h1>
+<h1>my recipes</h1><br />
+<%= link_to "add recipe", new_dish_path %><br /><br />
 
 <%= render(partial: 'dishes_list', locals: {dishes: @dishes}) %>

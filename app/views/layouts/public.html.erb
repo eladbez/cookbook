@@ -5,6 +5,7 @@
     
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     	<title>the amazing COOK BOOK <%= "| #{@username}" if @username %></title>
+		<link rel="shortcut icon" href="/assets/book.jpg" />
    	 <meta name="author" content="elad bezalel"> <!-- the username needs suplying --> 
   	<!--<%= stylesheet_link_tag('public1') %> --><!-- this css page needs creation -->
    	 <%= stylesheet_link_tag('public') %>
@@ -16,6 +17,7 @@
     <header>
       <h1>welcome to cook book</h1>
     </header>
+	<%= image_tag('book.jpg', :size => '50x50', :alt => 'cook book photo',) %>
      
     
       <%= render(:partial => '/layouts/navigation') %>
@@ -63,7 +65,7 @@
             <%= image_tag('hbcake.jpg', :size => '200x200', :alt => 'Photo Gallery') %>
         </div>
         <div>
-            <%= image_tag('ice_cream.jpeg', :size => '200x200', :alt => 'Photo Gallery') %>
+            <%= image_tag('Ice_Cream.jpeg', :size => '200x200', :alt => 'Photo Gallery') %>
         </div>
         
     </div>

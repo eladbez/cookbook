@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721083220) do
+ActiveRecord::Schema.define(version: 20140723095228) do
 
   create_table "belongings", force: true do |t|
     t.integer  "user_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20140721083220) do
     t.integer  "feast_id"
     t.integer  "user_id"
     t.binary   "image"
-    t.boolean  "shared"
+    t.boolean  "shared",       default: true
   end
 
   add_index "dishes", ["feast_id"], name: "index_dishes_on_feast_id", using: :btree

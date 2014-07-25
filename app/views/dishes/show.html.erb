@@ -1,27 +1,57 @@
 
 <%link_to("<< back to search",{:action=>'sort_form'})%>
 
-<h2>The secret recipe for: <%=@dish.name%></h2> <br />
-<aside class="left">
-	<%= dish_image(@dish,'300x300') %>  
-</aside>
-&nbsp;&nbsp;
+<h2>The secret recipe for: <%=@dish.name%></h2> <br /><br />
+<% unless session[:user_id] %>
+	<aside class="left">
+		<%= dish_image(@dish,'300x300') %>  
+	</aside>
+	&nbsp;&nbsp;
+<% else %>
+	
+	<aside class="left">
+		<%= dish_image(@dish,'250x250') %>  
+	</aside>
+	&nbsp;&nbsp;
 
+<% end %>
+<% unless session[:user_id] %>
 
-<p>taste:&nbsp;&nbsp; <%= @dish.taste %> </p><br />
-<p>culture: &nbsp;&nbsp;<%= @dish.culture %> </p><br />
-<p>mealpart: &nbsp;&nbsp;<%= @dish.mealpart %> </p><br /><br />
+	<p>taste:&nbsp;&nbsp; <%= @dish.taste %> </p><br />
+	<p>culture: &nbsp;&nbsp;<%= @dish.culture %> </p><br />
+	<p>mealpart: &nbsp;&nbsp;<%= @dish.mealpart %> </p><br /><br />
 
-<%if @dish.user_id.blank? || @dish.user_id==session[:user_id] %>
-	<%=link_to("edit recipe", edit_dish_path(@dish.id)) %>
-<%end%>
-&nbsp;&nbsp;			
+	<%if @dish.user_id.blank? || @dish.user_id==session[:user_id] %>
+		<%=link_to("edit recipe", edit_dish_path(@dish.id)) %>
+	<%end%>
+	&nbsp;&nbsp;			
+	
+	<%if @dish.user_id==session[:user_id]%>				
+		<%=link_to("delete recipe", delete_dish_path(@dish.id))%>
+	<%end%>
+	<br />
+	
+<% else %>
 
-<%if @dish.user_id==session[:user_id]%>				
-	<%=link_to("delete recipe", delete_dish_path(@dish.id))%>
-<%end%>
-<br />
+	<div class="right"> 
+		<p>taste:&nbsp;&nbsp; <%= @dish.taste %> </p><br />
+		<p>culture: &nbsp;&nbsp;<%= @dish.culture %> </p><br />
+		<p>mealpart: &nbsp;&nbsp;<%= @dish.mealpart %> </p><br /><br />
+	
+		<%if @dish.user_id.blank? || @dish.user_id==session[:user_id] %>
+			<%=link_to("edit recipe", edit_dish_path(@dish.id)) %>
+		<%end%>
+		&nbsp;&nbsp;			
+	
+		<%if @dish.user_id==session[:user_id]%>				
+			<%=link_to("delete recipe", delete_dish_path(@dish.id))%>
+		<%end%>
+		<br />
+	</div>
+<% end %>
+<br /><br /><br /><br />
 
+<h2>ingredients</h2><br /><br />
 
 <table class="small table">
 	<thead>
@@ -42,7 +72,7 @@
 	</tbody>
 </table>
 
-
+<br />
 <h2>cooking instructions</h2>
 <p><%=@dish.recipe%></p>
 <br /><br />
